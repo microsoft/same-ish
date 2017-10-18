@@ -42,10 +42,10 @@
              (every? (partial apply ish?)
                      (map vector this that)))))
 
-  clojure.lang.IPersistentSet
+  java.util.Set
   (ish? [this that]
     (or (= this that)
-        (and (set? that)
+        (and (instance? java.util.Set that)
              (= (count this) (count that))
              (let [[this-floats this-rest] (split-floats this)
                    [that-floats that-rest] (split-floats that)]

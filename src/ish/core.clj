@@ -26,13 +26,19 @@
   (ish? [this that]))
 
 (extend-protocol Approximate
+  nil
+  (ish? [this that]
+    (nil? that))
+
   Double
   (ish? [this that]
-    (ish* this that))
+    (and (float? that)
+         (ish* this (double that))))
 
   Float
   (ish? [this that]
-    (ish* this that))
+    (and (float? that)
+         (ish* (double this) (double that))))
 
   clojure.lang.Sequential
   (ish? [this that]
@@ -52,10 +58,10 @@
                (and (= this-rest that-rest)
                     (ish? (sort this-floats) (sort that-floats)))))))
 
-  clojure.lang.Associative
+  java.util.Map
   (ish? [this that]
     (or (= this that)
-        (and (instance? clojure.lang.Associative that)
+        (and (instance? java.util.Map that)
              (= (count this) (count that))
              (let [[this-floats this-rest] (split-floats (keys this))
                    [that-floats that-rest] (split-floats (keys that))]

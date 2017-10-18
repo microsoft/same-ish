@@ -11,7 +11,9 @@
             (java.util.HashSet. [1.0 2 \b "c" :d])))
   (is (ish? {:a 1.0 :b 2.0} {:a 1.0 :b 2.0}))
   (is (ish? {1.0 2.0 3.0 4.0} {1.0 2.0 3.0 4.0}))
-  (is (ish? {1.0 2 :a "b"} {1.0 2 :a "b"})))
+  (is (ish? {1.0 2 :a "b"} {1.0 2 :a "b"}))
+  (is (ish? (java.util.HashMap. {1.0 2 :a "b"})
+            (java.util.HashMap. {1.0 2 :a "b"}))))
 
 (deftest approx
   (is (ish? 1.0 1.00001))
@@ -22,9 +24,11 @@
             (java.util.HashSet. [1.00001 2 \b "c" :d])))
   (is (ish? {:a 1.0 :b 2.0} {:a 1.00001 :b 2.0}))
   (is (ish? {1.0 2.0 3.0 4.0} {1.00001 2.0 3.0 4.0}))
-  (is (ish? {1.0 2 :a "b"} {1.00001 2 :a "b"})))
+  (is (ish? {1.0 2 :a "b"} {1.00001 2 :a "b"}))
+  (is (ish? (java.util.HashMap. {1.0 2 :a "b"})
+            (java.util.HashMap. {1.00001 2 :a "b"}))))
 
-(deftest diff
+(deftest notequal
   (is (not (ish? 1.0 1.01)))
   (is (not (ish? [1.0 2.0] [1.01 2.0])))
   (is (not (ish? #{1.0 2.0} #{1.01 2.0})))
@@ -34,10 +38,33 @@
   (is (not (ish? {:a 1.0 :b 2.0} {:a 1.01 :b 2.0})))
   (is (not (ish? {1.0 2.0 3.0 4.0} {1.01 2.0 3.0 4.0})))
   (is (not (ish? {1.0 2 :a "b"} {1.01 2 :a "b"})))
+  (is (not (ish? (java.util.HashMap. {1.0 2 :a "b"})
+                 (java.util.HashMap. {1.01 2 :a "b"}))))
 
+  (is (not (ish? {0 nil} [nil])))
+  (is (not (ish? {nil 0} [nil])))
   (is (not (ish? [1.0 2 :foo] :bar)))
   (is (not (ish? #{1.0 2 :foo} :bar)))
   (is (not (ish? {"a" 1.0 :foo 2} :bar))))
+
+#_(deftest equal-ish
+    (let [vals [nil "a" "a" "b" \a \a \b :a :a :b 1 1 2 1.0 1.0 1.00001 2 [] '() #{} {}]
+          vals (reduce into
+                       vals
+                       [(mapcat (fn [v] [[v] (list v) #{v}])
+                                vals)
+                        (mapcat (fn [[v1 v2]]
+                                  [[v1 v2] (list v1 v2) #{v1 v2} {v1 v2}])
+                                (for [v1 vals
+                                      v2 vals
+                                      :when (not= v1 v2)]
+                                  [v1 v2]))])]
+      (doseq [a vals
+              b vals]
+        (when (= a b)
+          (is (ish? a b)))
+        (when (not (ish? a b))
+          (is (not= a b))))))
 
 #_(deftest fail
   ;; Uncomment this to see what test failures look like

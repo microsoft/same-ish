@@ -27,7 +27,11 @@
   (is (not (ish? #{1.0 2 \b "c" :d} #{1.01 2 \b "c" :d})))
   (is (not (ish? {:a 1.0 :b 2.0} {:a 1.01 :b 2.0})))
   (is (not (ish? {1.0 2.0 3.0 4.0} {1.01 2.0 3.0 4.0})))
-  (is (not (ish? {1.0 2 :a "b"} {1.01 2 :a "b"}))))
+  (is (not (ish? {1.0 2 :a "b"} {1.01 2 :a "b"})))
+
+  (is (not (ish? [1.0 2 :foo] :bar)))
+  (is (not (ish? #{1.0 2 :foo} :bar)))
+  (is (not (ish? {"a" 1.0 :foo 2} :bar))))
 
 #_(deftest fail
   ;; Uncomment this to see what test failures look like

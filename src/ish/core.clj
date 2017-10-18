@@ -37,15 +37,17 @@
   clojure.lang.Sequential
   (ish? [this that]
     (or (= this that)
-        (and (= (count this) (count that))
+        (and (sequential? that)
+             (= (count this) (count that))
              (every? (partial apply ish?)
                      (map vector this that)))))
 
   clojure.lang.IPersistentSet
   (ish? [this that]
     (or (= this that)
-        (and (= (count this) (count that))
-             (let [[this-floats  this-rest]  (split-floats this)
+        (and (set? that)
+             (= (count this) (count that))
+             (let [[this-floats this-rest] (split-floats this)
                    [that-floats that-rest] (split-floats that)]
                (and (= this-rest that-rest)
                     (ish? (sort this-floats) (sort that-floats)))))))
@@ -53,7 +55,8 @@
   clojure.lang.Associative
   (ish? [this that]
     (or (= this that)
-        (and (= (count this) (count that))
+        (and (instance? clojure.lang.Associative that)
+             (= (count this) (count that))
              (let [[this-floats this-rest] (split-floats (keys this))
                    [that-floats that-rest] (split-floats (keys that))]
                (and (= this-rest that-rest)

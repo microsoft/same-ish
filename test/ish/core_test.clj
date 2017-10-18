@@ -28,3 +28,8 @@
   (is (not (ish? {:a 1.0 :b 2.0} {:a 1.01 :b 2.0})))
   (is (not (ish? {1.0 2.0 3.0 4.0} {1.01 2.0 3.0 4.0})))
   (is (not (ish? {1.0 2 :a "b"} {1.01 2 :a "b"}))))
+
+#_(deftest fail
+  ;; Uncomment this to see what test failures look like
+  (is (ish? [1 :foo "bar" 1.0 2.0]
+            [1 :foo "bar" 1.00001 3.0])))

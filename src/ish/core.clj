@@ -75,7 +75,12 @@
 
   Object
   (ish? [this that]
-    (= this that)))
+    (if (and (.isArray (type this))
+             (.isArray (type that)))
+      (and (= (alength this) (alength that))
+           (every? #(ish? (aget this %) (aget that %))
+                   (range (alength this))))
+      (= this that))))
 
 (defmethod assert-expr 'ish? [msg [_ expected actual]]
   `(let [expected# ~expected

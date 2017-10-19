@@ -16,9 +16,13 @@
          result# (apply ish? expected# actuals#)]
      (if result#
        (do-report {:type :pass :message ~msg
-                   :expected expected# :actual actuals#})
+                   :expected expected# :actual (if (= 1 (count actuals#))
+                                                 (first actuals#)
+                                                 actuals#)})
        (do-report {:type :fail :message ~msg
-                   :expected expected# :actual actuals#
+                   :expected expected# :actual (if (= 1 (count actuals#))
+                                                 (first actuals#)
+                                                 actuals#)
                    :diffs (mapv #(vector % (diff expected# %))
                                 actuals#)}))
      result#))

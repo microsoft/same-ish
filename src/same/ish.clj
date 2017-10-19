@@ -1,6 +1,4 @@
-(ns ish.core
-  (require [clojure.test :refer [assert-expr do-report]]
-           [ish.diff :refer [diff]]))
+(ns same.ish)
 
 (def ^:dynamic *abs-ish* 1e-6)
 (def ^:dynamic *rel-ish* 1e-3)
@@ -81,15 +79,3 @@
            (every? #(ish? (aget this %) (aget that %))
                    (range (alength this))))
       (= this that))))
-
-(defmethod assert-expr 'ish? [msg [_ expected actual]]
-  `(let [expected# ~expected
-         actual# ~actual
-         result# (ish? expected# actual#)]
-     (if result#
-       (do-report {:type :pass :message ~msg
-                   :expected expected# :actual actual#})
-       (do-report {:type :fail :message ~msg
-                   :expected expected# :actual actual#
-                   :diffs [[actual# (diff expected# actual#)]]}))
-     result#))

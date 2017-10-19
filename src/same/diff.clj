@@ -1,4 +1,4 @@
-(ns ish.diff
+(ns same.diff
   (:require [clojure.data :as data]))
 
 (defn diff

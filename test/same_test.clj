@@ -1,6 +1,6 @@
-(ns ish.core-test
+(ns same-test
   (:require [clojure.test :refer :all]
-            [ish.core :refer :all]))
+            [same :refer [ish?]]))
 
 (deftest equal
   (is (ish? 1.0 1.0))

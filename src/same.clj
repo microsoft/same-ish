@@ -1,3 +1,5 @@
+;; Copyright (c) Microsoft Corporation. All rights reserved.
+;; Licensed under the MIT License.
 (ns same
   (require [clojure.test :refer [assert-expr do-report]]
            [same.ish :as si]

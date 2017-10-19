@@ -1,3 +1,5 @@
+;; Copyright (c) Microsoft Corporation. All rights reserved.
+;; Licensed under the MIT License.
 (ns same.diff
   (:require [clojure.data :as data]
             [same.ish :refer [ish?]]))

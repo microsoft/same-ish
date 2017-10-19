@@ -55,7 +55,9 @@
   (is (not (ish? {nil 0} [nil])))
   (is (not (ish? [1.0 2 :foo] :bar)))
   (is (not (ish? #{1.0 2 :foo} :bar)))
-  (is (not (ish? {"a" 1.0 :foo 2} :bar))))
+  (is (not (ish? {"a" 1.0 :foo 2} :bar)))
+  (is (not (ish? {:a 1.0 :b 2.0 :c 3.0 1.0 :d}
+                 {:a 1.0 :b 2.00001 :c 3.1 1.00001 :d}))))
 
 (deftest ^:slow equal-ish
     (let [vals [nil "a" "a" "b" \a \a \b :a :a :b 1 1 2 1.0 1.0 1.00001 2 [] '() #{} {} (into-array [])]

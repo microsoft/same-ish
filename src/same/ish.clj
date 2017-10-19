@@ -11,7 +11,7 @@
     (or (<= d *abs-ish*)
         (<= d (* *rel-ish* (Math/max (Math/abs f1) (Math/abs f2)))))))
 
-(defn- split-floats
+(defn split-floats
   "Split a collection into a vector of floating point values (of type Float or Double),
   and a set of all other values."
   [coll]

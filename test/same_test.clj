@@ -1,7 +1,7 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
 (ns same-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is]]
             [same :refer [ish?]]))
 
 (deftest equal
@@ -85,4 +85,6 @@
   (is (ish? [1 :foo "bar" 1.0 2.0]
             [1 :foo "bar" 1.00001 3.0]))
   (is (ish? #{1 :foo "bar" 1.0 2.0}
-            #{1 :foo "bar" 1.00001 3.0})))
+            #{1 :foo "bar" 1.00001 3.0}))
+  (is (ish? {:a 1.0 :b 2.0 :c 3.0 1.0 :d}
+            {:a 1.0 :b 2.00001 :c 3.1 1.00001 :d})))

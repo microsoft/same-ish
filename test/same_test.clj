@@ -57,7 +57,7 @@
   (is (not (ish? #{1.0 2 :foo} :bar)))
   (is (not (ish? {"a" 1.0 :foo 2} :bar))))
 
-#_(deftest equal-ish
+(deftest ^:slow equal-ish
     (let [vals [nil "a" "a" "b" \a \a \b :a :a :b 1 1 2 1.0 1.0 1.00001 2 [] '() #{} {} (into-array [])]
           vals (reduce into
                        vals
@@ -80,8 +80,7 @@
         (when (not (ish? a b))
           (is (not= a b))))))
 
-#_(deftest fail
-  ;; Uncomment this to see what test failures look like
+(deftest ^:fail fail
   (is (ish? 2.0 3.0))
   (is (ish? [1 :foo "bar" 1.0 2.0]
             [1 :foo "bar" 1.00001 3.0]))

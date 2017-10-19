@@ -80,5 +80,8 @@
 
 #_(deftest fail
   ;; Uncomment this to see what test failures look like
+  (is (ish? 2.0 3.0))
   (is (ish? [1 :foo "bar" 1.0 2.0]
-            [1 :foo "bar" 1.00001 3.0])))
+            [1 :foo "bar" 1.00001 3.0]))
+  (is (ish? #{1 :foo "bar" 1.0 2.0}
+            #{1 :foo "bar" 1.00001 3.0})))

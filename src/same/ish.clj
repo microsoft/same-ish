@@ -75,7 +75,8 @@
 
   Object
   (ish? [this that]
-    (if (and (.isArray (type this))
+    (if (and that
+             (.isArray (type this))
              (.isArray (type that)))
       (and (= (alength this) (alength that))
            (every? #(ish? (aget this %) (aget that %))

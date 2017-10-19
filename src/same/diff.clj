@@ -4,6 +4,12 @@
   (:require [clojure.set :as set]
             [same.ish :refer [ish? split-floats]]))
 
+(defn- nilify
+  [coll]
+  (if (every? nil? coll)
+    nil
+    coll))
+
 (defn- update-common-keys
   [acc lmap rmap keys]
   (reduce (fn [m k]
@@ -64,7 +70,7 @@
 
 (extend-protocol Diff
   nil
-  (ish? [this that]
+  (diff [this that]
     [nil that nil])
 
   clojure.lang.Sequential
@@ -74,12 +80,21 @@
       [nil nil that]
 
       (sequential? that)
-      (reduce (fn [[cl cr cc] [vl vr vc]]
-                [(conj cl vl)
-                 (conj cr vr)
-                 (conj cc vc)])
-              [[] [] []]
-              (map diff this that))
+      (loop [l []
+             r []
+             c []
+             left this
+             right that]
+        (if (or (empty? left) (empty? right))
+          (mapv nilify [(into l left) (into r right) c])
+          (let [[l0 & lr] left
+                [r0 & rr] right
+                ish (ish? l0 r0)]
+            (recur (conj l (if-not ish l0))
+                   (conj r (if-not ish r0))
+                   (conj c (if ish r0))
+                   lr
+                   rr))))
 
       :else
       [this that nil]))

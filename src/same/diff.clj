@@ -10,6 +10,12 @@
     nil
     coll))
 
+(defn- un-array
+  [a]
+  (if (and a (.isArray (type a)))
+    (into [] a)
+    a))
+
 (defn- update-common-keys
   [acc lmap rmap keys]
   (reduce (fn [m k]
@@ -65,6 +71,24 @@
           :else
           (recur (assoc-in a [:r rk0] rv) lk rkr))))))
 
+(defn- diff-seq
+  [this that]
+  (loop [l []
+         r []
+         c []
+         left this
+         right that]
+    (if (or (empty? left) (empty? right))
+      (mapv nilify [(into l left) (into r right) c])
+      (let [[l0 & lr] left
+            [r0 & rr] right
+            ish (ish? l0 r0)]
+        (recur (conj l (if-not ish l0))
+               (conj r (if-not ish r0))
+               (conj c (if ish r0))
+               lr
+               rr)))))
+
 (defprotocol Diff
   (diff [this that]))
 
@@ -80,21 +104,7 @@
       [nil nil that]
 
       (sequential? that)
-      (loop [l []
-             r []
-             c []
-             left this
-             right that]
-        (if (or (empty? left) (empty? right))
-          (mapv nilify [(into l left) (into r right) c])
-          (let [[l0 & lr] left
-                [r0 & rr] right
-                ish (ish? l0 r0)]
-            (recur (conj l (if-not ish l0))
-                   (conj r (if-not ish r0))
-                   (conj c (if ish r0))
-                   lr
-                   rr))))
+      (diff-seq this that)
 
       :else
       [this that nil]))
@@ -153,5 +163,9 @@
   Object
   (diff [this that]
     (if (ish? this that)
-      [nil nil that]
-      [this that nil])))
+      [nil nil (un-array that)]
+      (if (and that
+               (.isArray (type this))
+               (.isArray (type that)))
+        (diff-seq this that)
+        [(un-array this) (un-array that) nil]))))

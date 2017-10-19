@@ -2,7 +2,7 @@
 ;; Licensed under the MIT License.
 (ns same.diff
   (:require [clojure.set :as set]
-            [same.ish :refer [ish? split-floats]]))
+            [same.ish :refer [ish split-floats]]))
 
 (defn- nilify
   [coll]
@@ -21,7 +21,7 @@
   (reduce (fn [m k]
             (let [lv (get lmap k)
                   rv (get rmap k)]
-              (if (ish? lv rv)
+              (if (ish lv rv)
                 (assoc-in m [:c k] rv)
                 (-> m
                     (assoc-in [:l k] lv)
@@ -54,8 +54,8 @@
             lv (get lmap lk0)
             rv (get rmap rk0)]
         (cond
-          (ish? lk0 rk0)
-          (if (ish? lv rv)
+          (ish lk0 rk0)
+          (if (ish lv rv)
             (recur (assoc-in a [:c rk0] rv)
                    lkr
                    rkr)
@@ -82,7 +82,7 @@
       (mapv nilify [(into l left) (into r right) c])
       (let [[l0 & lr] left
             [r0 & rr] right
-            ish (ish? l0 r0)]
+            ish (ish l0 r0)]
         (recur (conj l (if-not ish l0))
                (conj r (if-not ish r0))
                (conj c (if ish r0))
@@ -100,7 +100,7 @@
   clojure.lang.Sequential
   (diff [this that]
     (cond
-      (ish? this that)
+      (ish this that)
       [nil nil that]
 
       (sequential? that)
@@ -112,7 +112,7 @@
   java.util.Set
   (diff [this that]
     (cond
-      (ish? this that)
+      (ish this that)
       [nil nil that]
 
       (instance? java.util.Set that)
@@ -128,7 +128,7 @@
             (let [[vl & rl] left
                   [vr & rr] right]
               (cond
-                (ish? vl vr)
+                (ish vl vr)
                 (recur l r (conj c vr) rl rr)
 
                 (< vl vr)
@@ -143,7 +143,7 @@
   java.util.Map
   (diff [this that]
     (cond
-      (ish? this that)
+      (ish this that)
       [nil nil that]
 
       (instance? java.util.Map that)
@@ -162,7 +162,7 @@
 
   Object
   (diff [this that]
-    (if (ish? this that)
+    (if (ish this that)
       [nil nil (un-array that)]
       (if (and that
                (.isArray (type this))

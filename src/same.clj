@@ -2,19 +2,23 @@
 ;; Licensed under the MIT License.
 (ns same
   (require [clojure.test :refer [assert-expr do-report]]
-           [same.ish :as si]
-           [same.diff :as sd]))
+           [same.ish :refer [ish]]
+           [same.diff :refer [diff]]))
 
-(def ish? si/ish?)
+(defn ish?
+  [left & rights]
+  {:pre [(not-empty rights)]}
+  (every? (partial ish left) rights))
 
-(defmethod assert-expr 'ish? [msg [_ expected actual]]
+(defmethod assert-expr 'ish? [msg [_ expected & actuals]]
   `(let [expected# ~expected
-         actual# ~actual
-         result# (si/ish? expected# actual#)]
+         actuals# ~(vec actuals)
+         result# (apply ish? expected# actuals#)]
      (if result#
        (do-report {:type :pass :message ~msg
-                   :expected expected# :actual actual#})
+                   :expected expected# :actual actuals#})
        (do-report {:type :fail :message ~msg
-                   :expected expected# :actual actual#
-                   :diffs [[actual# (sd/diff expected# actual#)]]}))
+                   :expected expected# :actual actuals#
+                   :diffs (mapv #(vector % (diff expected# %))
+                                actuals#)}))
      result#))

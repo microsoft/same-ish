@@ -6,14 +6,13 @@
 
 (defn- nilify
   [coll]
-  (if (every? nil? coll)
-    nil
+  (when-not (every? nil? coll)
     coll))
 
 (defn- un-array
   [a]
   (if (and a (.isArray (type a)))
-    (into [] a)
+    (vec a)
     a))
 
 (defn- update-common-keys

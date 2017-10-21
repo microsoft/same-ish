@@ -2,7 +2,7 @@
 ;; Licensed under the MIT License.
 (ns same-test
   (:require [clojure.test :refer [deftest is testing]]
-            [same :refer [ish?]]))
+            [same :refer [ish? zeroish? not-zeroish? with-max-diff]]))
 
 (defn- about
   [x]
@@ -87,6 +87,18 @@
   (is (not (ish? {:a 1.0 :b 2.0 :c 3.0 1.0 :d}
                  {:a 1.0 :b (about 2) :c 3.1 (about 1) :d}))))
 
+(deftest zeroish-test
+  (is (zeroish? (- 2.0 (* (Math/sqrt 2.0) (Math/sqrt 2.0)))))
+  (is (not (zeroish? (- 2e12 (* (Math/sqrt 2e12) (Math/sqrt 2e12))))))
+  (is (zeroish? (- 2e12 (* (Math/sqrt 2e12) (Math/sqrt 2e12)))
+                :max-diff 2e12))
+  (is (zeroish? (float (- 50.0 (* (float (Math/sqrt 50.0))
+                                  (float (Math/sqrt 50.0)))))
+                :max-diff 50.0))
+  (is (not-zeroish? (double (- 50.0 (* (float (Math/sqrt 50.0))
+                                       (float (Math/sqrt 50.0)))))
+                    :max-diff 50.0)))
+
 (deftest ^:slow equal-ish
   ;; test that `=` and `ish?` are consistent for lots of types/values
   (let [vals [nil "a" "b" \a \b :a :b 1 2 1.0 (about 1) 2 [] '() #{} {} (into-array [])]
@@ -129,3 +141,6 @@
 (deftest ^:fail fail-nildiff
   (is (= [1 nil] [1]))
   (is (ish? [1 nil] [1])))
+
+(deftest ^:fail fail-zeroish
+  (is (zeroish? (- 10 10.1))))

@@ -2,14 +2,58 @@
 ;; Licensed under the MIT License.
 (ns same.ish)
 
-(def ^:dynamic *abs-ish* 1e-6)
-(def ^:dynamic *rel-ish* 1e-3)
+(def ^:dynamic *max-diff*
+  "The maximum value used in a subtraction (to deal with catastrophic cancellation)."
+  100.0)
 
-(defn- ish*
+(def ^:dynamic *max-ulps*
+  "The maximum number of ULPs difference before two numbers are not the same-ish."
+  2)
+
+(defn- double-ish
+  "Check whether two doubles are close enough to be considered the same-ish."
   [f1 f2]
-  (let [d (Math/abs (- f1 f2))]
-    (or (<= d *abs-ish*)
-        (<= d (* *rel-ish* (Math/max (Math/abs f1) (Math/abs f2)))))))
+  (let [f1 (double f1)
+        f2 (double f2)]
+    (cond
+      ;; First check absolute difference (in case we are near zero).
+      (<= (Math/abs (- f1 f2)) (Math/ulp (double *max-diff*)))
+      true
+
+      ;; Either they have different signs, or at least one is NaN.
+      (not= (Math/signum f1) (Math/signum f2))
+      false
+
+      ;; Only one is infinite, it cannot be close to any finite value.
+      (not= (.isInfinite f1) (.isInfinite f2))
+      false
+
+      ;; Otherwise check relative difference in ULPs.
+      :else
+      (<= (Math/abs (- (Double/doubleToLongBits f1)
+                       (Double/doubleToLongBits f2)))
+          *max-ulps*))))
+
+(defn- float-ish
+  "Check whether two floats are close enough to be considered the same-ish."
+  [f1 f2]
+  (let [f1 (float f1)
+        f2 (float f2)]
+    ;; Same logic as double-ish, but for (single-precision) floats.
+    (cond
+      (<= (Math/abs (- f1 f2)) (Math/ulp (float *max-diff*)))
+      true
+
+      (not= (Math/signum f1) (Math/signum f2))
+      false
+
+      (not= (.isInfinite f1) (.isInfinite f2))
+      false
+
+      :else
+      (<= (Math/abs (- (Float/floatToIntBits f1)
+                       (Float/floatToIntBits f2)))
+          *max-ulps*))))
 
 (defn split-floats
   "Split a collection into a vector of floating point values (of type Float or Double),
@@ -33,12 +77,12 @@
   Double
   (ish [this that]
     (and (float? that)
-         (ish* this (double that))))
+         (double-ish this that)))
 
   Float
   (ish [this that]
     (and (float? that)
-         (ish* (double this) (double that))))
+         (float-ish this that)))
 
   clojure.lang.Sequential
   (ish [this that]

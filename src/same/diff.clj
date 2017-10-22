@@ -11,7 +11,7 @@
 
 (defn- un-array
   [a]
-  (if (and a (.isArray (type a)))
+  (if (and a (.isArray ^Class (type a)))
     (vec a)
     a))
 
@@ -64,7 +64,7 @@
                    lkr
                    rkr))
 
-          (< lk0 rk0)
+          (< ^double lk0 ^double rk0)
           (recur (assoc-in a [:l lk0] lv) lkr rk)
 
           :else
@@ -130,7 +130,7 @@
                 (ish vl vr)
                 (recur l r (conj c vr) rl rr)
 
-                (< vl vr)
+                (< ^double vl ^double vr)
                 (recur (conj l vl) r c rl right)
 
                 :else
@@ -164,7 +164,7 @@
     (if (ish this that)
       [nil nil (un-array that)]
       (if (and that
-               (.isArray (type this))
-               (.isArray (type that)))
+               (.isArray ^Class (type this))
+               (.isArray ^Class (type that)))
         (diff-seq this that)
         [(un-array this) (un-array that) nil]))))

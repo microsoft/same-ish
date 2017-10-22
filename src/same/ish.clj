@@ -25,14 +25,14 @@
       false
 
       ;; Only one is infinite, it cannot be close to any finite value.
-      (not= (.isInfinite f1) (.isInfinite f2))
+      (not= (Double/isInfinite f1) (Double/isInfinite f2))
       false
 
       ;; Otherwise check relative difference in ULPs.
       :else
-      (<= (Math/abs (- (Double/doubleToLongBits f1)
-                       (Double/doubleToLongBits f2)))
-          *max-ulps*))))
+      (<= ^long (Math/abs (- (Double/doubleToLongBits f1)
+                             (Double/doubleToLongBits f2)))
+          (long *max-ulps*)))))
 
 (defn- float-ish
   "Check whether two floats are close enough to be considered the same-ish."
@@ -47,13 +47,13 @@
       (not= (Math/signum f1) (Math/signum f2))
       false
 
-      (not= (.isInfinite f1) (.isInfinite f2))
+      (not= (Float/isInfinite f1) (Float/isInfinite f2))
       false
 
       :else
-      (<= (Math/abs (- (Float/floatToIntBits f1)
-                       (Float/floatToIntBits f2)))
-          *max-ulps*))))
+      (<= ^long (Math/abs (- (Float/floatToIntBits f1)
+                             (Float/floatToIntBits f2)))
+          (long *max-ulps*)))))
 
 (defn split-floats
   "Split a collection into a vector of floating point values (of type Float or Double),
@@ -120,9 +120,9 @@
   Object
   (ish [this that]
     (if (and that
-             (.isArray (type this))
-             (.isArray (type that)))
-      (and (= (alength this) (alength that))
-           (every? #(ish (aget this %) (aget that %))
-                   (range (alength this))))
+             (.isArray ^Class (type this))
+             (.isArray ^Class (type that)))
+      (and (= (count this) (count that))
+           (every? identity
+                   (map ish this that)))
       (= this that))))

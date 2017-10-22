@@ -2,15 +2,8 @@
 ;; Licensed under the MIT License.
 (ns same-test
   (:require [clojure.test :refer [deftest is testing]]
-            [same :refer [ish? zeroish? not-zeroish? with-max-diff]]))
-
-(defn- about
-  [x]
-  (+ x (Math/ulp (double x))))
-
-(defn- about-
-  [x]
-  (- x (Math/ulp (double x))))
+            [same :refer [ish? zeroish? not-zeroish? with-max-diff]]
+            [same.test-helpers :refer [about java-map java-set]]))
 
 (deftest scalar-test
   (is (ish? 1.0 1.0))
@@ -19,7 +12,7 @@
 
 (deftest multi-test
   (is (ish? 1.0 1.0 1.0))
-  (is (ish? 1.0 (about 1) (about- 1)))
+  (is (ish? 1.0 (about 1) (about 1 -)))
   (is (not (ish? 1.0 (about 1) 1.01))))
 
 (deftest vector-test
@@ -37,12 +30,12 @@
     (is (ish? #{1.0 2 \b "c" :d} #{(about 1) 2 \b "c" :d}))
     (is (not (ish? #{1.0 2 \b "c" :d} #{1.01 2 \b "c" :d}))))
   (testing "Java sets"
-    (is (ish? (java.util.HashSet. [1.0 2 \b "c" :d])
-              (java.util.HashSet. [1.0 2 \b "c" :d])))
-    (is (ish? (java.util.HashSet. [1.0 2 \b "c" :d])
-              (java.util.HashSet. [(about 1) 2 \b "c" :d])))
-    (is (not (ish? (java.util.HashSet. [1.0 2 \b "c" :d])
-                   (java.util.HashSet. [1.01 2 \b "c" :d]))))))
+    (is (ish? (java-set 1.0 2 \b "c" :d)
+              (java-set 1.0 2 \b "c" :d)))
+    (is (ish? (java-set 1.0 2 \b "c" :d)
+              (java-set (about 1) 2 \b "c" :d)))
+    (is (not (ish? (java-set 1.0 2 \b "c" :d)
+                   (java-set 1.01 2 \b "c" :d))))))
 
 (deftest map-test
   (testing "Maps of keyword-double"
@@ -58,12 +51,12 @@
     (is (ish? {1.0 2 :a "b"} {(about 1) 2 :a "b"}))
     (is (not (ish? {1.0 2 :a "b"} {1.01 2 :a "b"}))))
   (testing "Java maps"
-    (is (ish? (java.util.HashMap. {1.0 2 :a "b"})
-              (java.util.HashMap. {1.0 2 :a "b"})))
-    (is (ish? (java.util.HashMap. {1.0 2 :a "b"})
-              (java.util.HashMap. {(about 1) 2 :a "b"})))
-    (is (not (ish? (java.util.HashMap. {1.0 2 :a "b"})
-                   (java.util.HashMap. {1.01 2 :a "b"}))))))
+    (is (ish? (java-map 1.0 2 :a "b")
+              (java-map 1.0 2 :a "b")))
+    (is (ish? (java-map 1.0 2 :a "b")
+              (java-map (about 1) 2 :a "b")))
+    (is (not (ish? (java-map 1.0 2 :a "b")
+                   (java-map 1.01 2 :a "b"))))))
 
 (deftest array-test
   (testing "Arrays of doubles"

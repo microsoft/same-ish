@@ -4,7 +4,7 @@
   (require [clojure.data :as data]
            [clojure.test :refer [deftest is testing]]
            [same.diff :as sd]
-           [same.test-helpers :refer [about]]))
+           [same.test-helpers :refer [about deftest-slow]]))
 
 (deftest diff-scalar
   (is (= [nil nil :a]      (sd/diff :a :a)))
@@ -89,7 +89,7 @@
          (sd/diff {:a 1.0 :b 2.0 :c 3.0 4.0 {:e 1.0 :f 2.0}}
                   {:a 1.0 :b (about 2) :c 3.1 4.0 {:e (about 1) :f 3.0}}))))
 
-(deftest ^:slow data-diff
+(deftest-slow data-diff
   ;; test that our diff behaves the same as clojure.data/diff for non-floats
   (let [vals [nil :a :b [] '() #{} {} [nil] '(nil) #{nil} [:a] '(:a) #{:a} {nil nil} {:a :b}]
         vals (reduce into

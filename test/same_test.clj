@@ -2,8 +2,9 @@
 ;; Licensed under the MIT License.
 (ns same-test
   (:require [clojure.test :refer [deftest is testing]]
-            [same :refer [ish? zeroish? not-zeroish? with-max-diff]]
+            [same :refer [ish? zeroish? not-zeroish? with-comparator set-comparator!]]
             [same.diff :as sd]
+            [same.ish :as ish]
             [same.test-helpers :refer [about java-map java-set deftest-fail deftest-slow]]))
 
 (deftest scalar-test
@@ -97,6 +98,9 @@
 
 (deftest zeroish-test
   (is (zeroish? (- 2.0 (* (Math/sqrt 2.0) (Math/sqrt 2.0)))))
+  (is (not-zeroish? (- 2.0 (* (float (Math/sqrt 2.0)) (float (Math/sqrt 2.0))))))
+  (is (zeroish? (float (- 2.0 (* (float (Math/sqrt 2.0)) (float (Math/sqrt 2.0)))))))
+  (is (not-zeroish? (float 0.01)))
   (is (not (zeroish? (- 2e12 (* (Math/sqrt 2e12) (Math/sqrt 2e12))))))
   (is (zeroish? (- 2e12 (* (Math/sqrt 2e12) (Math/sqrt 2e12)))
                 :max-diff 2e12))
@@ -106,6 +110,22 @@
   (is (not-zeroish? (double (- 50.0 (* (float (Math/sqrt 50.0))
                                        (float (Math/sqrt 50.0)))))
                     :max-diff 50.0)))
+
+(deftest with-comparator-test
+  (is (with-comparator =
+        (ish? [1.0] [1.0])))
+  (is (not (with-comparator =
+             (ish? [1.0] [(about 1)])))))
+
+(deftest set-comparator-test
+  (let [old-comparator ish/*comparator*]
+    (try
+      (set-comparator! =)
+      (is (ish? [1.0] [1.0]))
+      (is (not (ish? [1.0] [(about 1)])))
+      (finally
+        (set-comparator! old-comparator)))
+    (is (ish? [1.0] [(about 1)]))))
 
 (deftest-slow equal-ish
   ;; test that `=`, `ish?` and  `diff` are consistent for various types/values

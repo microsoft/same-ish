@@ -1,19 +1,10 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
 (ns same
-  (require [clojure.test :refer [assert-expr do-report]]
-           [same.ish :as ish :refer [ish]]
-           [same.diff :refer [diff]]))
-
-(defmacro with-max-diff
-  [maxval & body]
-  `(binding [ish/*max-diff* (double ~maxval)]
-     ~@body))
-
-(defmacro with-max-ulps
-  [maxval & body]
-  `(binding [ish/*max-ulps* (long ~maxval)]
-     ~@body))
+  (:require [clojure.test :refer [assert-expr do-report]]
+            [same.compare :refer [near-zero compare-ulp]]
+            [same.diff :refer [diff]]
+            [same.ish :as ish :refer [ish]]))
 
 (defn ish?
   [left & rights]
@@ -22,28 +13,20 @@
 
 (defn zeroish?
   [val & {:keys [max-diff] :or {max-diff 1000.0}}]
-  (with-max-diff max-diff
-    (ish (if (instance? Float val)
-           (float 0.0)
-           0.0)
-         val)))
+  (near-zero val max-diff))
 
 (defn not-zeroish?
   [val & {:keys [max-diff] :or {max-diff 1000.0}}]
-  (with-max-diff max-diff
-    (not
-     (ish (if (instance? Float val)
-            (float 0.0)
-            0.0)
-          val))))
+  (not (near-zero val max-diff)))
 
-(defn set-max-diff!
-  [maxval]
-  (alter-var-root #'ish/*max-diff* (constantly (double maxval))))
+(defmacro with-comparator
+  [comparator & body]
+  `(binding [ish/*comparator* ~comparator]
+     ~@body))
 
-(defn set-max-ulps!
-  [maxulps]
-  (alter-var-root #'ish/*max-ulps* (constantly (long maxulps))))
+(defn set-comparator!
+  [comparator]
+  (alter-var-root #'ish/*comparator* (constantly comparator)))
 
 (defmethod assert-expr 'ish? [msg [_ expected & actuals]]
   `(let [expected# ~expected

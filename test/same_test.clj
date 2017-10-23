@@ -10,6 +10,12 @@
   (is (ish? 1.0 1.0))
   (is (ish? 1.0 (about 1)))
   (is (not (ish? 1.0 1.01)))
+  (is (not (ish? 0.0 0)))
+
+  (is (ish? (float 1.0) 1.0))
+  (is (ish? (float 1.0) (about 1)))
+  (is (not (ish? (float 1.0) 1.01)))
+  (is (not (ish? (float 0.0) 0)))
 
   (is (not (ish? nil false))))
 
@@ -28,6 +34,11 @@
     (is (ish? #{1.0 2.0} #{1.0 2.0}))
     (is (ish? #{1.0 2.0} #{(about 1) 2.0}))
     (is (not (ish? #{1.0 2.0} #{1.01 2.0}))))
+  (testing "Other types"
+    (is (ish? #{:a} #{:a}))
+    (is (not (ish? #{:a} #{:a :b})))
+    (is (not (ish? #{:a :b} #{:a})))
+    (is (not (ish? #{:a :b} #{:a :c}))))
   (testing "Mixed sets"
     (is (ish? #{1.0 2 \b "c" :d} #{1.0 2 \b "c" :d}))
     (is (ish? #{1.0 2 \b "c" :d} #{(about 1) 2 \b "c" :d}))
@@ -65,7 +76,8 @@
   (testing "Arrays of doubles"
     (is (ish? (into-array [1.0 2.0]) (into-array [1.0 2.0])))
     (is (ish? (into-array [1.0 2.0]) (into-array [(about 1) 2.0])))
-    (is (not (ish? (into-array [1.0 2.0]) (into-array [1.01 2.0])))))
+    (is (not (ish? (into-array [1.0 2.0]) (into-array [1.01 2.0]))))
+    (is (not (ish? (into-array [1.0 2.0]) (into-array [1.0])))))
   (testing "Arrays of mixed types"
     (is (ish? (to-array [1.0 2 \b "c" :d])
               (to-array [1.0 2 \b "c" :d])))

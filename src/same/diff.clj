@@ -4,16 +4,42 @@
   (:require [clojure.set :as set]
             [same.ish :refer [ish split-floats]]))
 
-(defn- nilify
-  [coll]
-  (when-not (every? nil? coll)
-    coll))
-
 (defn- un-array
   [a]
   (if (and a (.isArray ^Class (type a)))
     (vec a)
     a))
+
+(defn- result-vec
+  [n res & next]
+  (if (empty? next)
+    res
+    (-> (or res [])
+        (into (take (- ^long n (count res)) (repeat nil)))
+        (into next))))
+
+(defprotocol Diff
+  (diff [this that]))
+
+(defn- diff-seq
+  [this that]
+  (loop [l nil
+         r nil
+         c nil
+         n 0
+         left this
+         right that]
+    (if (or (empty? left) (empty? right))
+      [(apply result-vec n l left) (apply result-vec n r right) c]
+      (let [[l0 & lm] left
+            [r0 & rm] right]
+        (if (ish l0 r0)
+          (recur l r (result-vec n c r0) (inc n) lm rm)
+          (let [[dl dr dc] (diff l0 r0)]
+            (recur (result-vec n l dl)
+                   (result-vec n r dr)
+                   (if (nil? dc) c (result-vec n c dc))
+                   (inc n) lm rm)))))))
 
 (defn- update-common-keys
   [acc lmap rmap keys]
@@ -22,9 +48,11 @@
                   rv (get rmap k)]
               (if (ish lv rv)
                 (assoc-in m [:c k] rv)
-                (-> m
-                    (assoc-in [:l k] lv)
-                    (assoc-in [:r k] rv)))))
+                (let [[dl dr dc] (diff lv rv)]
+                  (cond-> m
+                    (not (every? nil? [dl dr])) (assoc-in [:l k] dl)
+                    (not (every? nil? [dl dr])) (assoc-in [:r k] dr)
+                    (not (nil? dc))             (assoc-in [:c k] dc))))))
           acc
           keys))
 
@@ -58,38 +86,19 @@
             (recur (assoc-in a [:c rk0] rv)
                    lkr
                    rkr)
-            (recur (-> a
-                       (assoc-in [:l lk0] lv)
-                       (assoc-in [:r rk0] rv))
-                   lkr
-                   rkr))
+            (let [[dl dr dc] (diff lv rv)]
+              (recur (cond-> a
+                       (not (every? nil? [dl dr])) (assoc-in [:l lk0] dl)
+                       (not (every? nil? [dl dr])) (assoc-in [:r rk0] dr)
+                       (not (nil? dc))             (assoc-in [:c rk0] dc))
+                     lkr
+                     rkr)))
 
           (< ^double lk0 ^double rk0)
           (recur (assoc-in a [:l lk0] lv) lkr rk)
 
           :else
           (recur (assoc-in a [:r rk0] rv) lk rkr))))))
-
-(defn- diff-seq
-  [this that]
-  (loop [l []
-         r []
-         c []
-         left this
-         right that]
-    (if (or (empty? left) (empty? right))
-      (mapv nilify [(into l left) (into r right) c])
-      (let [[l0 & lr] left
-            [r0 & rr] right
-            ish (ish l0 r0)]
-        (recur (conj l (if-not ish l0))
-               (conj r (if-not ish r0))
-               (conj c (if ish r0))
-               lr
-               rr)))))
-
-(defprotocol Diff
-  (diff [this that]))
 
 (extend-protocol Diff
   nil
@@ -150,11 +159,12 @@
             [that-floats that-rest] (split-floats (keys that))
             extract (juxt :l :r :c)]
         (-> {:l (select-keys this (set/difference this-rest that-rest))
-             :r (select-keys this (set/difference that-rest this-rest))
+             :r (select-keys that (set/difference that-rest this-rest))
              :c {}}
             (update-common-keys this that (set/intersection this-rest that-rest))
             (update-float-keys this that (sort this-floats) (sort that-floats))
-            extract))
+            extract
+            (->> (mapv not-empty))))
 
       :else
       [this that nil]))

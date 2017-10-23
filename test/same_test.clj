@@ -3,12 +3,15 @@
 (ns same-test
   (:require [clojure.test :refer [deftest is testing]]
             [same :refer [ish? zeroish? not-zeroish? with-max-diff]]
+            [same.diff :as sd]
             [same.test-helpers :refer [about java-map java-set]]))
 
 (deftest scalar-test
   (is (ish? 1.0 1.0))
   (is (ish? 1.0 (about 1)))
-  (is (not (ish? 1.0 1.01))))
+  (is (not (ish? 1.0 1.01)))
+
+  (is (not (ish? nil false))))
 
 (deftest multi-test
   (is (ish? 1.0 1.0 1.0))
@@ -93,7 +96,7 @@
                     :max-diff 50.0)))
 
 (deftest ^:slow equal-ish
-  ;; test that `=` and `ish?` are consistent for lots of types/values
+  ;; test that `=`, `ish?` and  `diff` are consistent for various types/values
   (let [vals [nil "a" "b" \a \b :a :b 1 2 1.0 (about 1) 2 [] '() #{} {} (into-array [])]
         vals (reduce into
                      vals
@@ -109,12 +112,19 @@
                                     v2 vals]
                                 [v1 v2]))])]
     (doseq [a vals
-            b vals]
+            b vals
+            :let [d (sd/diff a b)]]
       (testing (str "Checking " a ", " b)
+        (if (ish? a b)
+          (do
+            (is (nil? (first d)))
+            (is (nil? (second d))))
+          (do
+            (is (or (not (nil? (first d)))
+                    (not (nil? (second d)))))
+            (is (not= a b))))
         (when (= a b)
-          (is (ish? a b)))
-        (when (not (ish? a b))
-          (is (not= a b)))))))
+          (is (ish? a b)))))))
 
 (deftest ^:fail fail-double
   (is (ish? 2.0 3.0)))
@@ -122,6 +132,10 @@
 (deftest ^:fail fail-vector
   (is (ish? [1 :foo "bar" 1.0 2.0]
             [1 :foo "bar" (about 1) 3.0])))
+
+(deftest ^:fail fail-nested-vector
+  (is (ish? [1 :foo ["bar" 1.0]       2.0       4.4]
+            [1 :foo ["bar" (about 1)] (about 2) 3.0])))
 
 (deftest ^:fail fail-set
   (is (ish? #{1 :foo "bar" 1.0 2.0}

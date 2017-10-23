@@ -30,8 +30,8 @@
 
       ;; Otherwise check relative difference in ULPs.
       :else
-      (<= ^long (Math/abs (- (Double/doubleToLongBits f1)
-                             (Double/doubleToLongBits f2)))
+      (<= ^long (Math/abs ^long (- (Double/doubleToLongBits f1)
+                                   (Double/doubleToLongBits f2)))
           (long *max-ulps*)))))
 
 (defn- float-ish

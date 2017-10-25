@@ -140,8 +140,8 @@
     (is (ish? [1.0] [(about 1)]))))
 
 (deftest-slow equal-ish
-  ;; test that `=`, `ish?` and  `diff` are consistent for various types/values
-  (let [vals [nil "a" "b" \a \b :a :b 1 2 1.0 (about 1) 2 [] '() #{} {} (into-array [])]
+  ;; test that `=`, `==`, `ish?` and  `diff` are consistent for various types/values
+  (let [vals [nil "a" "b" \a \b :a :b 1 2 1.0 (about 1) 2.0 [] '() #{} {} (into-array [])]
         vals (reduce into
                      vals
                      [(mapcat (fn [v]
@@ -160,14 +160,20 @@
             :let [d (sd/diff a b)]]
       (testing (str "Checking " a ", " b)
         (if (ish? a b)
-          (do
+          (do ;; same-ish, should not be diff
             (is (nil? (first d)))
             (is (nil? (second d))))
-          (do
+          (do ;; not same-ish, should be some diff
             (is (or (not (nil? (first d)))
                     (not (nil? (second d)))))
-            (is (not= a b))))
+            ;; shouldn't be equal either
+            (is (not= a b))
+            (when (and (number? a) (number? b))
+              (is (not (== a b))))))
+        ;; when equal, should also be same-ish
         (when (= a b)
+          (is (ish? a b)))
+        (when (and (number? a) (number? b) (== a b))
           (is (ish? a b)))))))
 
 (deftest-fail fail-double

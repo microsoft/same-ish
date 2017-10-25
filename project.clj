@@ -1,4 +1,4 @@
-(defproject same/ish "0.1.0"
+(defproject same/ish "0.1.1-SNAPSHOT"
   :license {:name "MIT License"}
   :description "Floating point comparisons for tests"
   :url "https://github.com/Microsoft/same-ish"

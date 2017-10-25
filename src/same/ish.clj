@@ -28,13 +28,25 @@
 
   Double
   (ish [this that]
-    (and (float? that)
+    (and (number? that)
          (*comparator* this that)))
 
   Float
   (ish [this that]
-    (and (float? that)
+    (and (number? that)
          (*comparator* this that)))
+
+  Number
+  (ish [this that]
+    (cond
+      (float? that)
+      (*comparator* (double this) that)
+
+      (number? that)
+      (== this that)
+
+      :else
+      (= this that)))
 
   clojure.lang.Sequential
   (ish [this that]

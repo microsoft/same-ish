@@ -11,12 +11,18 @@
   (is (ish? 1.0 1.0))
   (is (ish? 1.0 (about 1)))
   (is (not (ish? 1.0 1.01)))
-  (is (not (ish? 0.0 0)))
 
   (is (ish? (float 1.0) 1.0))
   (is (ish? (float 1.0) (about 1)))
   (is (not (ish? (float 1.0) 1.01)))
-  (is (not (ish? (float 0.0) 0)))
+
+  (is (ish? 0.0 0))
+  (is (ish? 0.0 (int 0)))
+  (is (ish? (float 0.0) 0))
+  (is (ish? 0 0.0))
+  (is (ish? (int 0) 0.0))
+  (is (ish? 1/2 0.5))
+  (is (ish? 0.5 1/2))
 
   (is (not (ish? nil false))))
 
@@ -112,16 +118,22 @@
                     :max-diff 50.0)))
 
 (deftest with-comparator-test
-  (is (with-comparator =
+  (is (with-comparator ==
         (ish? [1.0] [1.0])))
-  (is (not (with-comparator =
-             (ish? [1.0] [(about 1)])))))
+  (is (with-comparator ==
+        (ish? [1.0] [1])))
+  (is (with-comparator ==
+        (ish? [1] [1.0])))
+  (is (with-comparator ==
+        (not (ish? [1.0] [(about 1)])))))
 
 (deftest set-comparator-test
   (let [old-comparator ish/*comparator*]
     (try
-      (set-comparator! =)
+      (set-comparator! ==)
       (is (ish? [1.0] [1.0]))
+      (is (ish? [1.0] [1]))
+      (is (ish? [1] [1.0]))
       (is (not (ish? [1.0] [(about 1)])))
       (finally
         (set-comparator! old-comparator)))

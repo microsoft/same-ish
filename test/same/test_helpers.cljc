@@ -1,9 +1,12 @@
+;; Copyright (c) Microsoft Corporation. All rights reserved.
+;; Licensed under the MIT License.
 (ns same.test-helpers
-  (:require [clojure.test]))
+  (:require [clojure.test :refer [deftest is]]
+            [same.platform :as p]))
 
 (defn about
   [x & [op]]
-  ((or op +) (double x) (Math/ulp (double x))))
+  ((or op +) (double x) (p/ulp (double x))))
 
 (defn java-set
   [& coll]
@@ -15,18 +18,19 @@
 
 (def ^:private cloverage*
   (delay
-   (try (eval '(var cloverage.coverage/*covered*))
-        true
-        (catch Throwable _
-          false))))
+   #?(:clj (try (eval '(var cloverage.coverage/*covered*))
+                true
+                (catch Throwable _
+                  false))
+      :cljs true)))
 
 (defn- cloverage?
   []
   @cloverage*)
 
 (defn- deftest-no-cloverage [name body]
-  (when-not (cloverage?)
-    `(clojure.test/deftest ~name ~@body)))
+  #?(:clj (when-not (cloverage?)
+            `(deftest ~name ~@body))))
 
 (defmacro deftest-slow [name & body]
   (deftest-no-cloverage (with-meta name {:slow true}) body))

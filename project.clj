@@ -6,10 +6,21 @@
   :dependencies []
   :profiles
   {:dev
-   {:dependencies [[org.clojure/clojure "1.8.0"]]}}
+   {:dependencies [[org.clojure/clojure "1.8.0"]
+                   [org.clojure/clojurescript "1.9.946"]]}}
+  :cljsbuild {:builds {:test
+                       {:source-paths ["src" "test"]
+                        :compiler {:output-to "target/test.js"
+                                   :source-map "target/test.js.map"
+                                   :output-dir "target/js"
+                                   :main same.test-runner
+                                   :optimizations :advanced}}}}
   :plugins [[venantius/ultra "0.5.1" :exclusions [org.clojure/clojure]]
-            [lein-cloverage "1.0.9" :exclusions [org.clojure/clojure]]]
+            [lein-cloverage "1.0.9" :exclusions [org.clojure/clojure]]
+            [lein-doo "0.1.8"]]
   :test-selectors {:default (complement (some-fn :slow :fail))
                    :most    (complement :fail)
                    :slow    :slow
-                   :fail    :fail})
+                   :fail    :fail}
+  :doo {:build "test"
+        :alias {:default [:phantom]}})

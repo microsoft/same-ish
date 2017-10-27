@@ -8,11 +8,17 @@
             [same.ish :as ish :refer [ish]]))
 
 (defn ish?
+  "Compare two or more values, returning true if they are the same-ish.
+  ~~~klipse
+  (ish? 1 1.00001)
+  ~~~
+  "
   [left & rights]
   {:pre [(not-empty rights)]}
   (every? (partial ish left) rights))
 
 (defn zeroish?
+  "Compare a numeric value to zero."
   [val & {:keys [max-diff] :or {max-diff 1000.0}}]
   (near-zero val max-diff))
 
@@ -21,6 +27,7 @@
   (not (near-zero val max-diff)))
 
 (defn set-comparator!
+  "Set the default comparator."
   [comparator]
   #?(:clj (alter-var-root #'ish/*comparator* (constantly comparator))
      :cljs (set! ish/*comparator* comparator)))

@@ -9,7 +9,8 @@
   Can be overridden using [[with-comparator]] or [[set-comparator!]]."
   (compare-ulp 100.0 2))
 
-(defn split-floats
+;; Only public so that it can be called from same.diff
+(defn ^:no-doc split-floats
   "Split a collection into a vector of floating point values (of type Float or Double),
   and a set of all other values."
   [coll]

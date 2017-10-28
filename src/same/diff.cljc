@@ -105,7 +105,7 @@
    (extend-protocol Diff
      nil
      (diff [this that]
-       [nil that nil])
+       [this that nil])
 
      clojure.lang.Sequential
      (diff [this that]

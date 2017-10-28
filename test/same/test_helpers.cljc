@@ -4,6 +4,11 @@
   (:require [clojure.test :refer [deftest is]]
             [same.platform :as p]))
 
+(defn unconstant
+  "When Eastwood warns about constant test, wrap value in `unconstant` to prevent warning."
+  [x]
+  x)
+
 (defn about
   [x & [op]]
   ((or op +) (double x) (p/ulp (double x))))

@@ -25,6 +25,7 @@
                                    :optimizations :advanced
                                    :target :nodejs}}}}
   :plugins [[venantius/ultra "0.5.1" :exclusions [org.clojure/clojure]]
+            [jonase/eastwood "0.2.5" :exclusions [org.clojure/clojure]]
             [lein-cloverage "1.0.9" :exclusions [org.clojure/clojure]]
             [lein-doo "0.1.8" :exclusions [org.clojure/clojure]]
             [lein-codox "0.10.3" :exclusions [org.clojure/clojure]]]
@@ -37,6 +38,9 @@
         :alias {:default [:phantom]
                 :browsers [:chrome :chrome-canary :chrome-headless :safari]
                 :all [:phantom :slimer :rhino :nashorn :browsers]}}
+  :eastwood {:linters [:all]
+             :exclude-linters [:keyword-typos
+                               :non-clojure-file]}
   :codox {:project {:name "same/ish"}
           :metadata {:doc/format :markdown
                      :doc "**FIXME:** write docs"}

@@ -27,7 +27,7 @@
 #?(:clj
    (extend-protocol Approximate
      nil
-     (ish [this that]
+     (ish [_ that]
        (nil? that))
 
      Double

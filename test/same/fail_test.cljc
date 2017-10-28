@@ -3,7 +3,7 @@
 (ns same.fail-test
   (:require [clojure.test :refer [is]]
             [same :refer [ish? zeroish?]]
-            [same.test-helpers :refer [about deftest-fail]]))
+            [same.test-helpers :refer [about deftest-fail unconstant]]))
 
 (deftest-fail fail-double
   (is (ish? 2.0 3.0)))
@@ -25,7 +25,7 @@
             {:a 1.0 :b (about 2) :c 3.1 (about 1) :d})))
 
 (deftest-fail fail-nildiff
-  (is (= [1 nil] [1]))
+  (is (= [1 nil] (unconstant [1])))
   (is (ish? [1 nil] [1])))
 
 (deftest-fail fail-zeroish

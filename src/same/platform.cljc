@@ -1,26 +1,32 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
-(ns same.platform)
+(ns same.platform
+  "Platform-specific code, to try to minimise reader conditionals in the rest of the codebase.")
 
 (defn is-array?
+  "Return true if `a` is an array."
   [a]
   #?(:clj (and a (.isArray ^Class (type a)))
      :cljs (array? a)))
 
 (defn sign
+  "Return the sign of `f` (+1 if positive, -1 if negative, 0 if zero or NaN if NaN)."
   [f]
   #?(:clj (Math/signum (double f))
      :cljs (cond
              (< f 0) -1
              (> f 0)  1
+             (not= f f) f ;; NaN
              :else    0)))
 
 (defn is-infinite?
+  "Return true if `f` is infinite."
   [f]
   #?(:clj (Double/isInfinite (double f))
      :cljs (infinite? f)))
 
 (defn to-float
+  "Round `f` to a single precision (32-bit) float."
   [f]
   #?(:clj (float f)
      :cljs (let [arr (js/Float32Array. 1)]
@@ -51,6 +57,7 @@
            (- (.getFloat64 dv 0) f))))))
 
 (defn ulp
+  "Units in the Last Place (ULP) of `f` (difference between f and the next largest representable number)."
   [f]
   #?(:clj (if (instance? Float f)
             (Math/ulp (float f))
@@ -58,6 +65,7 @@
      :cljs (ulp* f)))
 
 (defn bit-diff-double
+  "Difference between two doubles in ULPs (i.e. number of representable numbers between them + 1)."
   [f1 f2]
   #?(:clj (Math/abs ^long (- (Double/doubleToLongBits f1)
                              (Double/doubleToLongBits f2)))
@@ -70,6 +78,7 @@
                  (- (.getUint32 dv 4) (.getUint32 dv 12)))))))
 
 (defn bit-diff-float
+  "Difference between two floats in ULPs (i.e. number of representable numbers between them + 1)."
   [f1 f2]
   #?(:clj (Math/abs ^long (- (Float/floatToIntBits f1)
                              (Float/floatToIntBits f2)))

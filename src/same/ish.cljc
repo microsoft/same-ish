@@ -1,6 +1,7 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
 (ns same.ish
+  "Comparing different types for same-ish-ness."
   (:require [same.compare :refer [compare-ulp]]
             [same.platform :as p]))
 
@@ -22,7 +23,9 @@
           coll))
 
 (defprotocol Approximate
-  (ish [this that]))
+  "Protocol for approximately comparing any types (using [[*comparator*]] for floating point parts)."
+  (ish [this that]
+    "Return true if the two arguments are approximately equal."))
 
 #?(:clj
    (extend-protocol Approximate

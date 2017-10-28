@@ -1,21 +1,25 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
 (ns same.compare
+  "Default comparator functions."
   (:require [same.platform :as p]))
 
 (defn- near-zero-double
   [f max-diff]
   (<= (double f) (p/ulp (double max-diff))))
 
-(defn- near-zero-float
-  [f max-diff]
-  (<= (float f) (p/ulp (float max-diff))))
+#?(:clj
+   (defn- near-zero-float
+     [f max-diff]
+     (<= (float f) (p/ulp (float max-diff)))))
 
 (defn near-zero
+  "Test if a number is near zero."
   [f max-diff]
-  (if (instance? #?(:clj Float :cljs float) f)
-    (near-zero-float f max-diff)
-    (near-zero-double f max-diff)))
+  #?(:clj (if (instance? Float f)
+            (near-zero-float f max-diff)
+            (near-zero-double f max-diff))
+     :cljs (near-zero-double f max-diff)))
 
 (defn- compare-ulp-double
   [f1 f2 max-abs max-ulp]
@@ -60,6 +64,7 @@
              (long max-ulp))))))
 
 (defn compare-ulp
+  "Create a comparator function that compares numbers by ULPs."
   [max-diff max-ulp]
   #?(:clj
      (let [max-abs-double (p/ulp (double max-diff))

@@ -1,11 +1,13 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
 (ns same.diff
+  "Generating diffs of different types."
   (:require [clojure.set :as set]
             [same.ish :refer [ish split-floats]]
             [same.platform :as p]))
 
 (defn- un-array
+  "If `a` is an array, convert to a vector so it prints nicely."
   [a]
   (if (p/is-array? a)
     (vec a)
@@ -20,9 +22,13 @@
         (into next))))
 
 (defprotocol Diff
-  (diff [this that]))
+  "Protocol for generating diffs of any type."
+  (diff [this that]
+    "Returns the diff of two values, in the same format as `clojure.data/diff`,
+    i.e. a vector of 3 elements: `[parts-only-in-this parts-only-in-that parts-in-both]`"))
 
 (defn- diff-seq
+  "Diff of sequential types, by comparing element-wise."
   [this that]
   (loop [l nil
          r nil

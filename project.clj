@@ -37,7 +37,7 @@
         :paths {:slimer "./node_modules/.bin/slimerjs"}
         :alias {:default [:phantom]
                 :browsers [:chrome :chrome-canary :chrome-headless :safari]
-                :all [:phantom :slimer :rhino :nashorn :browsers]}}
+                :all [:phantom #_:slimer :rhino :nashorn :browsers]}}
   :eastwood {:linters [:all]
              :exclude-linters [:keyword-typos
                                :non-clojure-file]}
@@ -53,4 +53,4 @@
                               "http://localhost:8000/src"
                               :klipse/require-statement
                               "(ns same-ish.demo
-          (:require [same :refer [ish?]]))"}]]})
+          (:require [same :refer [ish? zeroish? not-zeroish?]]))"}]]})

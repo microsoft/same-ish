@@ -20,6 +20,13 @@
   #?(:clj (Double/isInfinite (double f))
      :cljs (infinite? f)))
 
+(defn to-float
+  [f]
+  #?(:clj (float f)
+     :cljs (let [arr (js/Float32Array. 1)]
+             (aset arr 0 f)
+             (aget arr 0))))
+
 #?(:cljs
    (defn- ulp*
      [f]

@@ -7,6 +7,7 @@
                            :refer-macros [with-comparator]])
             [same.diff :as sd]
             [same.ish :as ish]
+            [same.platform :as p]
             [same.test-helpers :refer [about java-map java-set]]))
 
 (deftest scalar-test
@@ -108,17 +109,19 @@
 
 (deftest zeroish-test
   (is (zeroish? (- 2.0 (* (Math/sqrt 2.0) (Math/sqrt 2.0)))))
-  (is (not-zeroish? (- 2.0 (* (float (Math/sqrt 2.0)) (float (Math/sqrt 2.0))))))
-  (is (zeroish? (float (- 2.0 (* (float (Math/sqrt 2.0)) (float (Math/sqrt 2.0)))))))
+  (is (not-zeroish? (- 2.0 (* (p/to-float (Math/sqrt 2.0)) (p/to-float (Math/sqrt 2.0))))))
+  #?(:clj
+     (is (zeroish? (float (- 2.0 (* (float (Math/sqrt 2.0)) (float (Math/sqrt 2.0))))))))
   (is (not-zeroish? (float 0.01)))
   (is (not (zeroish? (- 2e12 (* (Math/sqrt 2e12) (Math/sqrt 2e12))))))
   (is (zeroish? (- 2e12 (* (Math/sqrt 2e12) (Math/sqrt 2e12)))
                 :max-diff 2e12))
-  (is (zeroish? (float (- 50.0 (* (float (Math/sqrt 50.0))
-                                  (float (Math/sqrt 50.0)))))
-                :max-diff 50.0))
-  (is (not-zeroish? (double (- 50.0 (* (float (Math/sqrt 50.0))
-                                       (float (Math/sqrt 50.0)))))
+  #?(:clj
+     (is (zeroish? (p/to-float (- 50.0 (* (p/to-float (Math/sqrt 50.0))
+                                          (p/to-float (Math/sqrt 50.0)))))
+                   :max-diff 50.0)))
+  (is (not-zeroish? (double (- 50.0 (* (p/to-float (Math/sqrt 50.0))
+                                       (p/to-float (Math/sqrt 50.0)))))
                     :max-diff 50.0)))
 
 (deftest with-comparator-test

@@ -20,16 +20,28 @@
   #?(:clj (Double/isInfinite (double f))
      :cljs (infinite? f)))
 
-(defn- ulp*
-  [f]
-  (let [f         (double (Math/abs (double f)))
-        epsilon   (Math/pow 2.0 -52)
-        max-value (* (- 2.0 epsilon) (Math/pow 2.0 1023))]
-    (cond
-      (not= f f)       f ;; NaN
-      (is-infinite? f) f
-      #_(= max-value f) ;; TODO
-      :else            (/ f 1e15))))
+#?(:cljs
+   (defn- ulp*
+     [f]
+     (let [f         (double (Math/abs (double f)))
+           epsilon   (Math/pow 2.0 -52)
+           max-value (* (- 2.0 epsilon) (Math/pow 2.0 1023))
+           max-ulp   (Math/pow 2.0 971)]
+       (cond
+         (zero? f)        0.0
+         (not= f f)       f ;; NaN
+         (is-infinite? f) f
+         (= max-value f)  max-ulp
+         :else
+         (let [buf (js/ArrayBuffer. 8)
+               dv  (js/DataView. buf)
+               _   (.setFloat64 dv 0 f)
+               hi  (.getUint32 dv 0)
+               lo  (.getUint32 dv 4)
+               _   (.setUint32 dv 4 (inc lo))
+               _   (when (= lo 0xffffffff)
+                     (.setUint32 dv 0 (inc hi)))]
+           (- (.getFloat64 dv 0) f))))))
 
 (defn ulp
   [f]
@@ -42,13 +54,13 @@
   [f1 f2]
   #?(:clj (Math/abs ^long (- (Double/doubleToLongBits f1)
                              (Double/doubleToLongBits f2)))
-     :cljs (let [[f1 f2] [(max f1 f2) (min f1 f2)]
-                 buf (js/ArrayBuffer. 16)
+     :cljs (let [buf (js/ArrayBuffer. 16)
                  dv  (js/DataView. buf)]
              (.setFloat64 dv 0 (double f1))
              (.setFloat64 dv 8 (double f2))
-             (+ (bit-shift-left (- (.getUint32 dv 0) (.getUint32 dv 8)) 32)
-                (- (.getUint32 dv 4) (.getUint32 dv 12))))))
+             (Math/abs
+              (+ (* (- (.getUint32 dv 0) (.getUint32 dv 8)) 0x100000000)
+                 (- (.getUint32 dv 4) (.getUint32 dv 12)))))))
 
 (defn bit-diff-float
   [f1 f2]

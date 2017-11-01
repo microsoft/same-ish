@@ -47,10 +47,20 @@
           :source-uri "https://github.com/Microsoft/same-ish/blob/{version}/{filepath}#L{line}"
           :output-path "docs"
           :html {:namespace-list :flat}
-          :themes [:default [:klipse
-                             {:klipse/external-libs
-                              #_"https://raw.githubusercontent.com/Microsoft/same-ish/cljs/src"
-                              "http://localhost:8000/src"
-                              :klipse/require-statement
-                              "(ns same-ish.demo
-          (:require [same :refer [ish? zeroish? not-zeroish?]]))"}]]})
+          :themes
+          [:default
+           [:klipse
+            {:klipse/external-libs
+             #_"https://raw.githubusercontent.com/Microsoft/same-ish/{VERSION}/src"
+             "http://localhost:8000/src"
+             :klipse/cached-macro-ns-regexp #"/same|same\..*/"
+             :klipse/cached-ns-regexp #"/same|same\..*/"
+             :klipse/bundled-ns-ignore-regexp #"/same|same\..*/"
+             :klipse/cached-ns-root "./cache-cljs"
+             :klipse/require-statement
+             "(ns same.klipse
+          (:require-macros [same :refer [with-comparator]])
+          (:require [same :refer [ish? zeroish? not-zeroish? set-comparator!]]
+                    [same.compare :refer [compare-ulp]]))"}]]})
+(def project (update-in project [:codox :themes 1 1 :klipse/external-libs]
+                        clojure.string/replace "{VERSION}" (project :version)))

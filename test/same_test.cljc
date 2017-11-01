@@ -13,11 +13,15 @@
 (deftest scalar-test
   (is (ish? 1.0 1.0))
   (is (ish? 1.0 (about 1)))
+  (is (ish? 1.0 1))
   (is (not (ish? 1.0 1.01)))
+  (is (not (ish? 1.0 "1")))
 
   (is (ish? (float 1.0) 1.0))
   (is (ish? (float 1.0) (about 1)))
+  (is (ish? (float 1.0) 1))
   (is (not (ish? (float 1.0) 1.01)))
+  (is (not (ish? (float 1.0) "1")))
 
   (is (ish? 0.0 0))
   (is (ish? 0.0 (int 0)))
@@ -26,6 +30,10 @@
   (is (ish? (int 0) 0.0))
   #?(:clj (is (ish? 1/2 0.5)))
   #?(:clj (is (ish? 0.5 1/2)))
+
+  (is (ish? 1 1.0))
+  (is (ish? 1 (float 1.0)))
+  (is (not (ish? 1 "1")))
 
   (is (not (ish? nil false))))
 

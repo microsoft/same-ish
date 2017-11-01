@@ -95,7 +95,7 @@ or [humane-test-output](https://github.com/pjstadig/humane-test-output)
 to prettify your test outputs, you will also get diff outputs for tests using `ish?`
 as well as those using `=`, e.g.:
 
-<img src="docs/diff.png" width="400">
+<img src="doc/diff.png" width="400">
 
 ## References
 

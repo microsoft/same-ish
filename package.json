@@ -4,7 +4,9 @@
   "description": "A Clojure library for approximate comparison of floating point types in tests",
   "main": "test.js",
   "directories": {
-    "doc": "docs",
+    "doc": "doc",
+    "output": "target",
+    "src": "src",
     "test": "test"
   },
   "dependencies": {},

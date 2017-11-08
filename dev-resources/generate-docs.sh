@@ -12,7 +12,7 @@ echo "Generating docs"
 lein codox
 
 echo "Inserting data-preambles"
-sed -i '' -e 's/\(code class="klipse"\)/\1 data-preamble="(set-comparator! (compare-ulp 100.0 2))"/' $DIR/*.html
+sed -i '' -e 's/\(code class="klipse"\)/\1 data-preamble="(set-comparator! default-comparator)"/' $DIR/*.html
 
 echo "Copying images"
 cp doc/*.png $DIR/

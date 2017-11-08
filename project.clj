@@ -62,6 +62,7 @@
              "(ns same.klipse
           (:require-macros [same :refer [with-comparator]])
           (:require [same :refer [ish? zeroish? not-zeroish? set-comparator!]]
-                    [same.compare :refer [compare-ulp]]))"}]]})
+                    [same.compare :refer [compare-ulp]]
+                    [same.ish :refer [default-comparator]]))"}]]})
 (def project (update-in project [:codox :themes 1 1 :klipse/external-libs]
                         clojure.string/replace "{VERSION}" (project :version)))

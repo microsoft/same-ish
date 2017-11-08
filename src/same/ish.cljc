@@ -5,10 +5,15 @@
   (:require [same.compare :refer [compare-ulp]]
             [same.platform :as p]))
 
+(def default-comparator
+  "The default comparator. Stored in a separate var to make it easier to reset after
+  modifying with [[set-comparator!]]"
+  (compare-ulp 100.0 2))
+
 (def ^:dynamic *comparator*
   "The function for comparing individual floats/doubles.
   Can be overridden using [[with-comparator]] or [[set-comparator!]]."
-  (compare-ulp 100.0 2))
+  default-comparator)
 
 ;; Only public so that it can be called from same.diff
 (defn ^:no-doc split-floats

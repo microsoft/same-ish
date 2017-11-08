@@ -28,7 +28,8 @@
             [jonase/eastwood "0.2.5" :exclusions [org.clojure/clojure]]
             [lein-cloverage "1.0.9" :exclusions [org.clojure/clojure]]
             [lein-doo "0.1.8" :exclusions [org.clojure/clojure]]
-            [lein-codox "0.10.3" :exclusions [org.clojure/clojure]]]
+            [lein-codox "0.10.3" :exclusions [org.clojure/clojure]]
+            [lein-pprint "1.2.0" :exclusions [org.clojure/clojure]]]
   :test-selectors {:default (complement (some-fn :slow :fail))
                    :most    (complement :fail)
                    :slow    :slow

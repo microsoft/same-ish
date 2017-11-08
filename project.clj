@@ -45,7 +45,7 @@
           :metadata {:doc/format :markdown
                      :doc "**FIXME:** write docs"}
           :source-uri "https://github.com/Microsoft/same-ish/blob/{version}/{filepath}#L{line}"
-          :output-path "docs"
+          :output-path "target/docs"
           :html {:namespace-list :flat}
           :themes
           [:default

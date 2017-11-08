@@ -1,0 +1,40 @@
+{
+  "name": "same-ish",
+  "version": "0.2.0",
+  "description": "A Clojure library for approximate comparison of floating point types in tests",
+  "main": "test.js",
+  "directories": {
+    "doc": "doc",
+    "output": "target",
+    "src": "src",
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-cljs-test": "^0.1.0",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-safari-launcher": "^1.0.0",
+    "slimerjs": "^0.10.3"
+  },
+  "scripts": {
+    "test": "lein doo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Microsoft/same-ish.git"
+  },
+  "keywords": [
+    "clojure",
+    "clojurescript",
+    "floating-point",
+    "testing"
+  ],
+  "author": "Emlyn Corrin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Microsoft/same-ish/issues"
+  },
+  "homepage": "https://github.com/Microsoft/same-ish#readme"
+}

@@ -1,10 +1,9 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
 (ns same.diff-test
-  (require [clojure.data :as data]
-           [clojure.test :refer [deftest is testing]]
-           [same.diff :as sd]
-           [same.test-helpers :refer [about deftest-slow]]))
+  (:require [clojure.test :refer [deftest is testing]]
+            [same.diff :as sd]
+            [same.test-helpers :refer [about]]))
 
 (deftest diff-scalar
   (is (= [nil nil :a]      (sd/diff :a :a)))
@@ -110,7 +109,7 @@
          (sd/diff {:a 1.0 :b 2.0 :c 3.0 4.0 {:e 1.0 :f 2.0}}
                   {:a 1.0 :b (about 2) :c 3.1 4.0 {:e (about 1) :f 3.0}}))))
 
-(deftest diff-array
+(deftest diff-array-test
   (is (= [nil nil [1.0]]
          (sd/diff (into-array [1.0]) (into-array [1.0]))))
   (is (= [[nil nil 3.1] [nil nil 3.0] [1.0 (about 2)]]
@@ -123,26 +122,3 @@
          (sd/diff #{1} 1)))
   (is (= [{:a 1} 1 nil]
          (sd/diff {:a 1} 1))))
-
-(deftest-slow data-diff
-  ;; test that our diff behaves the same as clojure.data/diff for non-floats
-  (let [vals [nil :a :b [] '() #{} {} [nil] '(nil) #{nil} [:a] '(:a) #{:a} {nil nil} {:a :b}]
-        vals (reduce into
-                     vals
-                     [(mapcat (fn [v]
-                                [[v] (list v) #{v}
-                                 [v v] (list v v)])
-                              vals)
-                      (mapcat (fn [[v1 v2]]
-                                (into [[v1 v2] (list v1 v2) {v1 v2}]
-                                      (if (= v1 v2)
-                                        []
-                                        [#{v1 v2}])))
-                              (for [v1 vals
-                                    v2 vals]
-                                [v1 v2]))])]
-    (doseq [a vals
-            b vals]
-      (testing (str "Checking " a ", " b)
-        (is (= (data/diff a b)
-               (sd/diff a b)))))))

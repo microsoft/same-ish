@@ -6,8 +6,11 @@ pom.xml.asc
 /classes/
 /target/
 /checkouts/
+/node_modules
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/
 .lein-failures
 .nrepl-port
+.DS_Store
+.#*

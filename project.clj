@@ -15,7 +15,8 @@
                                    :source-map "target/test.js.map"
                                    :output-dir "target/js"
                                    :main same.test-runner
-                                   :optimizations :advanced}}
+                                   :optimizations :advanced
+                                   :checked-arrays :warn}}
                        :node-test
                        {:source-paths ["src" "test"]
                         :compiler {:output-to "target/test.js"
@@ -23,6 +24,7 @@
                                    :output-dir "target/js"
                                    :main same.test-runner
                                    :optimizations :advanced
+                                   :checked-arrays :warn
                                    :target :nodejs}}}}
   :plugins [[venantius/ultra "0.5.1" :exclusions [org.clojure/clojure]]
             [jonase/eastwood "0.2.5" :exclusions [org.clojure/clojure]]

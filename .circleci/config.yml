@@ -2,17 +2,13 @@
 #
 # Check https://circleci.com/docs/2.0/language-clojure/ for more details
 #
-#version: 2
+version: 2
 jobs:
   build:
-    #docker:
+    docker:
       # specify the version you desire here
-      #- image: circleci/clojure:lein-2.7.1
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
+      - image: circleci/clojure:lein
+      #- image: emlyn/cljc
 
     working_directory: ~/repo
 
@@ -37,11 +33,12 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
+            - ~/repo/node_modules
           key: v1-dependencies-{{ checksum "project.clj" }}
 
       # run tests!
       - run: lein checks
       - run: lein test2junit
-      - run: lein doo once
+      #- run: lein doo once
       - run: lein cloverage
       - run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -f target/coverage/codecov.json

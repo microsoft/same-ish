@@ -42,6 +42,9 @@
             ;; Clojurescript tests
             [lein-doo "0.1.8"]
 
+            ;; generate test output for circleci
+            [test2junit "1.3.3"]
+
             ;; Code coverage
             [lein-cloverage "1.0.9"]
 
@@ -51,6 +54,8 @@
             ;; Code/style checks
             [jonase/eastwood "0.2.5"]
             [lein-cljfmt "0.5.7"]]
+
+  :test2junit-output-dir ~(or (System/getenv "CIRCLE_TEST_REPORTS") "target/test2junit")
 
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]}
 

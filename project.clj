@@ -1,8 +1,15 @@
 (defproject same/ish "0.1.1-SNAPSHOT"
   :description "A Clojure library for approximate comparison of floating point numbers in tests."
-  :url "https://github.com/Microsoft/same-ish"
+
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"}
+
+  :url "https://github.com/Microsoft/same-ish"
+
+  :scm {:name "git"
+        :url "https://github.com/Microsoft/same-ish"}
+
+  :deploy-branches ["master"]
 
   :dependencies []
 

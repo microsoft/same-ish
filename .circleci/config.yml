@@ -41,6 +41,7 @@ jobs:
       # run tests!
       - run: lein checks
       - run: lein test
+      - run: npm install
       - run: lein doo once
       - run: lein cloverage
       - run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -f target/coverage/codecov.json

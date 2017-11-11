@@ -3,7 +3,9 @@
   :url "https://github.com/Microsoft/same-ish"
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"}
+
   :dependencies []
+
   :profiles
   {:dev
    {:dependencies [[org.clojure/clojure "1.8.0"]
@@ -15,7 +17,8 @@
                                    :source-map "target/test.js.map"
                                    :output-dir "target/js"
                                    :main same.test-runner
-                                   :optimizations :advanced}}
+                                   :optimizations :advanced
+                                   :checked-arrays :warn}}
                        :node-test
                        {:source-paths ["src" "test"]
                         :compiler {:output-to "target/test.js"
@@ -23,25 +26,42 @@
                                    :output-dir "target/js"
                                    :main same.test-runner
                                    :optimizations :advanced
+                                   :checked-arrays :warn
                                    :target :nodejs}}}}
-  :plugins [[venantius/ultra "0.5.1" :exclusions [org.clojure/clojure]]
-            [jonase/eastwood "0.2.5" :exclusions [org.clojure/clojure]]
-            [lein-cloverage "1.0.9" :exclusions [org.clojure/clojure]]
-            [lein-doo "0.1.8" :exclusions [org.clojure/clojure]]
-            [lein-codox "0.10.3" :exclusions [org.clojure/clojure]]
-            [lein-pprint "1.2.0" :exclusions [org.clojure/clojure]]]
+
+  :plugins [;; Nice test output
+            [venantius/ultra "0.5.1"]
+
+            ;; Clojurescript tests
+            [lein-doo "0.1.8"]
+
+            ;; Code coverage
+            [lein-cloverage "1.0.9"]
+
+            ;; Documentation
+            [lein-codox "0.10.3"]
+
+            ;; Code/style checks
+            [jonase/eastwood "0.2.5"]
+            [lein-cljfmt "0.5.7"]]
+
+  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]}
+
   :test-selectors {:default (complement (some-fn :slow :fail))
                    :most    (complement :fail)
                    :slow    :slow
                    :fail    :fail}
+
   :doo {:build "test"
         :paths {:slimer "./node_modules/.bin/slimerjs"}
         :alias {:default [:phantom]
                 :browsers [:chrome :chrome-canary :chrome-headless :safari]
                 :all [:phantom #_:slimer :rhino :nashorn :browsers]}}
+
   :eastwood {:linters [:all]
              :exclude-linters [:keyword-typos
                                :non-clojure-file]}
+
   :codox {:project {:name "same/ish"}
           :metadata {:doc/format :markdown
                      :doc "**FIXME:** write docs"}
@@ -64,5 +84,6 @@
           (:require [same :refer [ish? zeroish? not-zeroish? set-comparator!]]
                     [same.compare :refer [compare-ulp]]
                     [same.ish :refer [default-comparator]]))"}]]})
+
 (def project (update-in project [:codox :themes 1 1 :klipse/external-libs]
                         clojure.string/replace "{VERSION}" (project :version)))

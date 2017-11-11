@@ -1,0 +1,14 @@
+language: clojure
+
+cache:
+  directories:
+  - $HOME/.m2
+
+script:
+  - lein checks
+  - lein test
+  - lein doo once
+  - lein cloverage
+
+notifications:
+  Emlyn.Corrin@microsoft.com

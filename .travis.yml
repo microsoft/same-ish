@@ -11,7 +11,7 @@ script:
 
 after_success:
   - lein cloverage --codecov
-  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOEN -f target/coverage/codecov.json
+  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -f target/coverage/codecov.json
 
 notifications:
   Emlyn.Corrin@microsoft.com

@@ -2,13 +2,12 @@
 #
 # Check https://circleci.com/docs/2.0/language-clojure/ for more details
 #
-version: 2
+#version: 2
 jobs:
   build:
-    docker:
+    #docker:
       # specify the version you desire here
       #- image: circleci/clojure:lein-2.7.1
-      - image: andycjones/clojure-js-build
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images

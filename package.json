@@ -19,7 +19,7 @@
     "slimerjs": "^0.10.3"
   },
   "scripts": {
-    "test": "lein doo"
+    "test": "lein doo once"
   },
   "repository": {
     "type": "git",

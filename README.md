@@ -3,6 +3,9 @@
 > Equality may perhaps be a right, but no power on earth can ever turn it into a fact.  
 > &nbsp; &nbsp; &nbsp; &nbsp; — *Honore de Balzac*
 
+[![Travis CI](https://img.shields.io/travis/Microsoft/same-ish.svg)](https://travis-ci.org/Microsoft/same-ish)
+[![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/Microsoft/same-ish)
+
 You have some functions that return doubles or floats and you want to write some tests.
 How do you compare your results to the expected values?
 You can't use equality because of rounding errors,
@@ -18,9 +21,8 @@ See the [API docs](https://microsoft.github.io/same-ish/latest) for more detaile
 and interactive examples. A brief summary is provided below.
 
 In Leiningen, add the following to your `:dependencies` in `project.clj`:
-```clojure
-[same/ish "0.1.0"]
-```
+
+[![Clojars Project](https://clojars.org/same/ish/latest-version.svg)](https://clojars.org/same/ish)
 
 Then in your test namespace(s), require `same`:
 ```clojure

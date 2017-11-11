@@ -79,8 +79,7 @@
           [:default
            [:klipse
             {:klipse/external-libs
-             #_"https://raw.githubusercontent.com/Microsoft/same-ish/{VERSION}/src"
-             "http://localhost:8000/src"
+             "https://raw.githubusercontent.com/Microsoft/same-ish/{VERSION}/src"
              :klipse/cached-macro-ns-regexp #"/same|same\..*/"
              :klipse/cached-ns-regexp #"/same|same\..*/"
              :klipse/bundled-ns-ignore-regexp #"/same|same\..*/"

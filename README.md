@@ -5,6 +5,10 @@
 
 [![Travis CI](https://img.shields.io/travis/Microsoft/same-ish.svg)](https://travis-ci.org/Microsoft/same-ish)
 [![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/Microsoft/same-ish)
+[![Dependencies Status](https://jarkeeper.com/Microsoft/same-ish/status.svg)](https://jarkeeper.com/Microsoft/same-ish)
+<!---
+[![Downloads](https://jarkeeper.com/Microsoft/same-ish/downloads.svg)](https://jarkeeper.com/Microsoft/same-ish)
+-->
 
 You have some functions that return doubles or floats and you want to write some tests.
 How do you compare your results to the expected values?

@@ -6,7 +6,7 @@ cache:
 
 script:
   - lein checks
-  - lein test
+  - lein tests
   - lein doo once
 
 after_success:

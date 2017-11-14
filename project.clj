@@ -15,9 +15,11 @@
 
   :profiles
   {:dev
-   {:dependencies [[org.clojure/clojure "1.8.0"]
-                   [org.clojure/clojurescript "1.9.946"]
-                   [viebel/codox-klipse-theme "0.0.5"]]}}
+   {:dependencies [[org.clojure/clojurescript "1.9.946"]
+                   [viebel/codox-klipse-theme "0.0.5"]]}
+   :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]]}
+   :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}
+   :1.9  {:dependencies [[org.clojure/clojure "1.9.0-RC1"]]}}
   :cljsbuild {:builds {:test
                        {:source-paths ["src" "test"]
                         :compiler {:output-to "target/test.js"
@@ -52,7 +54,8 @@
             [jonase/eastwood "0.2.5"]
             [lein-cljfmt "0.5.7"]]
 
-  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]}
+  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]
+            "tests" ["with-profile" "+1.9:+1.8:+1.7" "test"]}
 
   :test-selectors {:default (complement (some-fn :slow :fail))
                    :most    (complement :fail)

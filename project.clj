@@ -37,13 +37,13 @@
                                    :target :nodejs}}}}
 
   :plugins [;; Nice test output
-            [venantius/ultra "0.5.1"]
+            [venantius/ultra "0.5.2"]
 
             ;; Clojurescript tests
             [lein-doo "0.1.8"]
 
             ;; Code coverage
-            [lein-cloverage "1.0.9"]
+            [lein-cloverage "1.0.10"]
 
             ;; Documentation
             [lein-codox "0.10.3"]

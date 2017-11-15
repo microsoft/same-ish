@@ -12,9 +12,6 @@ die() {
 DOCROOT=$1
 [[ -z $DOCROOT ]] && die "usage: $0 docroot"
 
-echo "Ensuring we are up to date"
-git fetch
-
 echo "Cleaning up any old docs"
 rm -rf $DOCROOT
 

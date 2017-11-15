@@ -15,7 +15,8 @@
 
   :profiles
   {:dev
-   {:dependencies [[org.clojure/clojurescript "1.9.946"]
+   {:dependencies [[org.clojure/clojure "1.8.0"]
+                   [org.clojure/clojurescript "1.9.946"]
                    [viebel/codox-klipse-theme "0.0.5"]]}
    :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]]}
    :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}

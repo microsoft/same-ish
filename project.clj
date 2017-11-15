@@ -50,12 +50,36 @@
             ;; Documentation
             [lein-codox "0.10.3"]
 
+            ;; Run shell commands for doc generation
+            [lein-shell "0.5.0"]
+
             ;; Code/style checks
             [jonase/eastwood "0.2.5"]
             [lein-cljfmt "0.5.7"]]
 
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]
-            "tests" ["with-profile" "+1.9:+1.8:+1.7" "test"]}
+            "tests" ["with-profile" "+1.9:+1.8:+1.7" "test"]
+            "docs" ["do"
+                    ["shell" "dev-resources/prepare-docs.sh" "target/docs"]
+                    "codox"
+                    ["shell" "dev-resources/finalise-docs.sh" "target/docs/${:version}"]]
+            "deploy-docs" ["do"
+                           ["shell" "git" "-C" "target/docs" "add" "."]
+                           ["shell" "git" "-C" "target/docs" "commit" "-m" "Documentation for ${:version}"]
+                           ["shell" "git" "-C" "target/docs" "push"]]}
+
+  :release-tasks [["vcs" "assert-committed"]
+                  ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["vcs" "commit"]
+                  ["vcs" "tag"]
+                  ["docs"]
+                  ["deploy"]
+                  ["change" "version" "leiningen.release/bump-version"]
+                  ["vcs" "commit"]
+                  ["vcs" "push"]
+                  ["deploy-docs"]]
+
+  :deploy-repositories [["releases" :clojars]]
 
   :test-selectors {:default (complement (some-fn :slow :fail))
                    :most    (complement :fail)
@@ -76,7 +100,7 @@
           :metadata {:doc/format :markdown
                      :doc "**FIXME:** write docs"}
           :source-uri "https://github.com/Microsoft/same-ish/blob/{version}/{filepath}#L{line}"
-          :output-path "target/docs"
+          :output-path "target/docs/{VERSION}"
           :html {:namespace-list :flat}
           :themes
           [:default
@@ -94,5 +118,8 @@
                     [same.compare :refer [compare-ulp]]
                     [same.ish :refer [default-comparator]]))"}]]})
 
-(def project (update-in project [:codox :themes 1 1 :klipse/external-libs]
-                        clojure.string/replace "{VERSION}" (project :version)))
+(def project (-> project
+                 (update-in [:codox :output-path]
+                            clojure.string/replace "{VERSION}" (project :version))
+                 (update-in [:codox :themes 1 1 :klipse/external-libs]
+                            clojure.string/replace "{VERSION}" (project :version))))

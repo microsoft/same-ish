@@ -89,9 +89,21 @@
          (sd/diff {:a 1.0 :b false}
                   {:a 1.0 :b nil})))
 
+  (is (= [{:b nil} {:b false} {:a 1.0}]
+         (sd/diff {:a 1.0 :b nil}
+                  {:a 1.0 :b false})))
+
   (is (= [{2.0 false} {2.0 nil} {1.0 :a}]
          (sd/diff {1.0 :a 2.0 false}
                   {1.0 :a 2.0 nil})))
+
+  (is (= [{2.0 false} {2.0 nil} {3.0 1.0}]
+         (sd/diff {3.0 1.0 2.0 false}
+                  {3.0 1.0 2.0 nil})))
+
+  (is (= [{2.0 nil} {2.0 false} {3.0 1.0}]
+         (sd/diff {3.0 1.0 2.0 nil}
+                  {3.0 1.0 2.0 false})))
 
   (is (= [{{} {}} {:a nil} nil]
          (sd/diff {{} {}} {:a nil}))))

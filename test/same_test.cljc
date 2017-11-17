@@ -16,7 +16,7 @@
   (is (ish? 1.0 1))
   (is (not (ish? 1.0 1.01)))
   (is (not (ish? 1.0 -1.0)))
-  (is (not (ish? Double/MAX_VALUE Double/POSITIVE_INFINITY)))
+  (is (not (ish? p/max-value p/infinity)))
   (is (not (ish? 1.0 "1")))
 
   (is (ish? (float 1.0) 1.0))
@@ -24,7 +24,7 @@
   (is (ish? (float 1.0) 1))
   (is (not (ish? (float 1.0) 1.01)))
   (is (not (ish? (float 1.0) -1.0)))
-  (is (not (ish? Float/MAX_VALUE Float/POSITIVE_INFINITY)))
+  #?(:clj (is (not (ish? Float/MAX_VALUE Float/POSITIVE_INFINITY))))
   (is (not (ish? (float 1.0) "1")))
 
   (is (ish? 0.0 0))

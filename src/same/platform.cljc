@@ -3,6 +3,15 @@
 (ns same.platform
   "Platform-specific code, to try to minimise reader conditionals in the rest of the codebase.")
 
+(def max-value
+  #?(:clj (Double/MAX_VALUE)
+     :cljs (.-MAX_VALUE js/Number)))
+
+
+(def infinity
+  #?(:clj Double/POSITIVE_INFINITY
+     :cljs js/Infinity))
+
 (defn is-array?
   "Return true if `a` is an array."
   [a]

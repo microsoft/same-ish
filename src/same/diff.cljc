@@ -57,9 +57,9 @@
                 (assoc-in m [:c k] rv)
                 (let [[dl dr dc] (diff lv rv)]
                   (cond-> m
-                    (not (every? nil? [dl dr])) (assoc-in [:l k] dl)
-                    (not (every? nil? [dl dr])) (assoc-in [:r k] dr)
-                    (not (nil? dc))             (assoc-in [:c k] dc))))))
+                    (or (some? dl) (some? dr)) (assoc-in [:l k] dl)
+                    (or (some? dl) (some? dr)) (assoc-in [:r k] dr)
+                    (some? dc)                 (assoc-in [:c k] dc))))))
           acc
           keys))
 
@@ -93,13 +93,12 @@
             (recur (assoc-in a [:c rk0] rv)
                    lkr
                    rkr)
-            (let [[dl dr dc] (diff lv rv)]
-              (recur (cond-> a
-                       (not (every? nil? [dl dr])) (assoc-in [:l lk0] dl)
-                       (not (every? nil? [dl dr])) (assoc-in [:r rk0] dr)
-                       (not (nil? dc))             (assoc-in [:c rk0] dc))
-                     lkr
-                     rkr)))
+            (let [[dl dr dc] (diff lv rv)
+                  acc (cond-> a
+                        (or (some? dl) (some? dr)) (assoc-in [:l lk0] dl)
+                        (or (some? dl) (some? dr)) (assoc-in [:r rk0] dr)
+                        (some? dc)                 (assoc-in [:c rk0] dc))]
+              (recur acc lkr rkr)))
 
           (< ^double lk0 ^double rk0)
           (recur (assoc-in a [:l lk0] lv) lkr rk)

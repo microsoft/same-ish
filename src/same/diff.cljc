@@ -51,15 +51,11 @@
 (defn- update-common-keys
   [acc lmap rmap keys]
   (reduce (fn [m k]
-            (let [lv (get lmap k)
-                  rv (get rmap k)]
-              (if (ish lv rv)
-                (assoc-in m [:c k] rv)
-                (let [[dl dr dc] (diff lv rv)]
-                  (cond-> m
-                    (or (some? dl) (some? dr)) (assoc-in [:l k] dl)
-                    (or (some? dl) (some? dr)) (assoc-in [:r k] dr)
-                    (some? dc)                 (assoc-in [:c k] dc))))))
+            (let [[dl dr dc] (diff (get lmap k) (get rmap k))]
+              (cond-> m
+                (or (some? dl) (some? dr)) (assoc-in [:l k] dl)
+                (or (some? dl) (some? dr)) (assoc-in [:r k] dr)
+                (some? dc)                 (assoc-in [:c k] dc))))
           acc
           keys))
 
@@ -89,16 +85,12 @@
             rv (get rmap rk0)]
         (cond
           (ish lk0 rk0)
-          (if (ish lv rv)
-            (recur (assoc-in a [:c rk0] rv)
-                   lkr
-                   rkr)
-            (let [[dl dr dc] (diff lv rv)
-                  acc (cond-> a
-                        (or (some? dl) (some? dr)) (assoc-in [:l lk0] dl)
-                        (or (some? dl) (some? dr)) (assoc-in [:r rk0] dr)
-                        (some? dc)                 (assoc-in [:c rk0] dc))]
-              (recur acc lkr rkr)))
+          (let [[dl dr dc] (diff lv rv)
+                acc (cond-> a
+                      (or (some? dl) (some? dr)) (assoc-in [:l lk0] dl)
+                      (or (some? dl) (some? dr)) (assoc-in [:r rk0] dr)
+                      (some? dc)                 (assoc-in [:c rk0] dc))]
+            (recur acc lkr rkr))
 
           (< ^double lk0 ^double rk0)
           (recur (assoc-in a [:l lk0] lv) lkr rk)

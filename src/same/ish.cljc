@@ -51,7 +51,7 @@
      Number
      (ish [this that]
        (cond (float? that)  (*comparator* (double this) that)
-             (number? that) (== this that)
+             (number? that) (== ^Number this ^Number that)
              :else          (= this that)))
 
      clojure.lang.Sequential

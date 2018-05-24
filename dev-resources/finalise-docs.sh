@@ -31,6 +31,6 @@ lumo -k $DOCDIR/cache-cljs -c $(lein classpath) -e "$(lumo dev-resources/klipse-
 
 echo "Updating version list landing page"
 VERSIONS=$(git tag --list --format='%(refname:short) %(creatordate:short)' --sort=-creatordate)
-VERLIST=$(sed -E 's|([^ ]+) ([^ ]+)|<tr><td><a href="\1">\1</a></td><td>\2</td></tr>|' <<< "$VERSIONS")
+VERLIST=$(sed -E 's|([^ ]+) ([^ ]+)|<tr><td><a href="\1">\1</a></td><td>\2</td></tr>|' <<< "$VERSIONS" | awk -v RS="" '{gsub (/\n/,"\\n")}1')
 awk -v verlist="$VERLIST" '/%%VERSION_LIST_START%%/{p=1;print;print verlist}/%%VERSION_LIST_END%%/{p=0}!p' $DOCROOT/index.html > $DOCROOT/index_new.html
 mv $DOCROOT/index_new.html $DOCROOT/index.html

@@ -12,7 +12,7 @@ To compare two doubles, instead of using `=` or `==`, use `ish?`:
 (foo-test)
 ```
 
-You can also compare data structures, and they will be comapared element-wise, using `ish?`
+You can also compare data structures, and they will be compared element-wise, using `ish?`
 for floating point types, `==` for other numbers, and `=` for anything else:
 
 ```clojure
@@ -30,7 +30,7 @@ for floating point types, `==` for other numbers, and `=` for anything else:
                         [6 5 3]]))))
 ```
 
-Notice that tha expected value uses `Ratio`s, but since the result of the matrx inverse is doubles,
+Notice that the expected value uses `Ratio`s, but since the result of the matrx inverse is doubles,
 they are compared taking rounding errors into account.
 
 ## Comparing to zero

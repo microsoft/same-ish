@@ -4,7 +4,7 @@
   (:require [clojure.test :refer [deftest is testing]]
             #?(:clj  [same :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
                :cljs [same :refer [ish? zeroish? not-zeroish? set-comparator!]
-                           :refer-macros [with-comparator]])
+                      :refer-macros [with-comparator]])
             [same.diff :as sd]
             [same.ish :as ish]
             [same.platform :as p]

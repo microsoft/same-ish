@@ -7,7 +7,6 @@
   #?(:clj (Double/MAX_VALUE)
      :cljs (.-MAX_VALUE js/Number)))
 
-
 (def infinity
   #?(:clj Double/POSITIVE_INFINITY
      :cljs js/Infinity))

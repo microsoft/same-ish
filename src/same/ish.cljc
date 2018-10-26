@@ -83,7 +83,7 @@
                        (every? #(ish (get this %) (get that %)) this-rest)
                        (every? identity
                                (map #(and (ish %1 %2)
-                                       (ish (get this %1) (get that %2)))
+                                          (ish (get this %1) (get that %2)))
                                     (sort this-floats)
                                     (sort that-floats))))))))
 

@@ -45,7 +45,7 @@ To compare two numbers, instead of using `=` or `==`, use `ish?`:
   (is (ish? 1.0 (f 49.0))))
 ```
 
-You can also compare data structures, and they will be comapared element-wise, using `ish?`
+You can also compare data structures, and they will be compared element-wise, using `ish?`
 for floating point types, `==` for other numbers, and `=` for anything else:
 
 ```clojure

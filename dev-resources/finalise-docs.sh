@@ -19,8 +19,10 @@ echo "Updating latest link"
 rm $DOCROOT/latest
 ln -s $DOCVER $DOCROOT/latest
 
+PREAMBLE="(require '[same :refer [set-comparator!]] '[same.ish :refer [default-comparator]]) (set-comparator! default-comparator)"
+
 echo "Inserting data-preambles"
-sed -i '' -e 's/\(code class="klipse"\)/\1 data-preamble="(set-comparator! default-comparator)"/' $DOCDIR/*.html
+sed -i '' -e 's/\(code class="klipse"\)/\1 data-preamble="'"$PREAMBLE"'"/' $DOCDIR/*.html
 
 echo "Copying images"
 cp doc/*.png $DOCDIR/

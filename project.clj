@@ -46,17 +46,19 @@
             [lein-doo "0.1.8"]
 
             ;; Code coverage
-            [lein-cloverage "1.0.10"]
+            [lein-cloverage "1.0.13"]
 
             ;; Documentation
-            [lein-codox "0.10.3"]
+            [lein-codox "0.10.5"]
 
             ;; Run shell commands for doc generation
             [lein-shell "0.5.0"]
 
             ;; Code/style checks
-            [jonase/eastwood "0.2.5"]
-            [lein-cljfmt "0.5.7"]]
+            [jonase/eastwood "0.3.3"]
+            [lein-cljfmt "0.6.1"]]
+
+  :middleware [ultra.plugin/middleware]
 
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]
             "tests" ["with-profile" "+1.9:+1.8:+1.7" "test"]

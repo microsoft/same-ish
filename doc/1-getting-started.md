@@ -4,12 +4,17 @@
 
 To compare two doubles, instead of using `=` or `==`, use `ish?`:
 
-```klipse
-(deftest foo-test
-  (is (==   1.0 (* (/ 1. 49.) 49.))) ;; fails
-  (is (ish? 1.0 (* (/ 1. 49.) 49.)))) ;; succeeds!
+```clojure
+(ns demo.ish-test
+  (:require [clojure.test :refer :all]
+            [same :refer [ish?]]))
 
-(foo-test)
+(deftest ish-test
+  (let [one-ish (-> 1.0 (/ 49) (* 49))]
+    (is (==   one-ish 1.0)) ;; fails
+    (is (ish? one-ish 1.0)))) ;; succeeds!
+
+(ish-test)
 ```
 
 You can also compare data structures, and they will be compared element-wise, using `ish?`

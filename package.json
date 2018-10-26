@@ -11,12 +11,12 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "karma": "^1.7.1",
+    "karma": "^3.1.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-cljs-test": "^0.1.0",
-    "karma-firefox-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.1.0",
     "karma-safari-launcher": "^1.0.0",
-    "slimerjs": "^0.10.3"
+    "slimerjs": "^1.0.0"
   },
   "scripts": {
     "test": "lein doo once"

@@ -13,6 +13,10 @@
   [x & [op]]
   ((or op +) (double x) (p/ulp (double x))))
 
+(def infinity
+  #?(:clj Double/POSITIVE_INFINITY
+     :cljs js/Infinity))
+
 (defn java-set
   [& coll]
   (java.util.HashSet. ^java.util.Collection coll))

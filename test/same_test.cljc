@@ -8,7 +8,7 @@
             [same.diff :as sd]
             [same.ish :as ish]
             [same.platform :as p]
-            [same.test-helpers :refer [about java-map java-set]]))
+            [same.test-helpers :refer [about infinity java-map java-set]]))
 
 (deftest scalar-test
   (is (ish? 1.0 1.0))
@@ -16,7 +16,7 @@
   (is (ish? 1.0 1))
   (is (not (ish? 1.0 1.01)))
   (is (not (ish? 1.0 -1.0)))
-  (is (not (ish? p/max-value p/infinity)))
+  (is (not (ish? p/max-value infinity)))
   (is (not (ish? 1.0 "1")))
 
   (is (ish? (float 1.0) 1.0))

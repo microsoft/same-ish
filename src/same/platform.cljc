@@ -7,10 +7,6 @@
   #?(:clj (Double/MAX_VALUE)
      :cljs (.-MAX_VALUE js/Number)))
 
-(def infinity
-  #?(:clj Double/POSITIVE_INFINITY
-     :cljs js/Infinity))
-
 (defn is-array?
   "Return true if `a` is an array."
   [a]

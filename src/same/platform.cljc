@@ -13,6 +13,12 @@
   #?(:clj (and a (.isArray ^Class (type a)))
      :cljs (array? a)))
 
+(defn nan?
+  "Return true if `f` is NaN (Not-a-Number)"
+  [f]
+  #?(:clj (Double/isNaN (double f))
+     :cljs (js/isNaN f)))
+
 (defn sign
   "Return the sign of `f` (+1 if positive, -1 if negative, 0 if zero or NaN if NaN)."
   [f]
@@ -20,7 +26,7 @@
      :cljs (cond
              (< f 0) -1
              (> f 0)  1
-             (not= f f) f ;; NaN
+             (nan? f) f
              :else    0)))
 
 (defn is-infinite?
@@ -46,7 +52,7 @@
            max-ulp   (Math/pow 2.0 971)]
        (cond
          (zero? f)        0.0
-         (not= f f)       f ;; NaN
+         (nan? f)         f
          (is-infinite? f) f
          (= max-value f)  max-ulp
          :else

@@ -60,7 +60,7 @@ for floating point types, `==` for other numbers, and `=` for anything else:
 
 ## Requirements
 
-Since version 0.2.0, Clojure 1.7.0 or higher is required due to the reader conditionals
+Clojure 1.7.0 or higher is required due to the reader conditionals
 required for ClojureScript support.
 
 ## References

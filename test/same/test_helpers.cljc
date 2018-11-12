@@ -17,6 +17,10 @@
   #?(:clj Double/POSITIVE_INFINITY
      :cljs js/Infinity))
 
+(def nan
+  #?(:clj Double/NaN
+     :cljs js/NaN))
+
 (defn java-set
   [& coll]
   (java.util.HashSet. ^java.util.Collection coll))

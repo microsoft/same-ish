@@ -51,7 +51,6 @@
            max-value (* (- 2.0 epsilon) (Math/pow 2.0 1023))
            max-ulp   (Math/pow 2.0 971)]
        (cond
-         (zero? f)        0.0
          (nan? f)         f
          (is-infinite? f) f
          (= max-value f)  max-ulp

@@ -1,6 +1,6 @@
 # same/ish - floating point comparisons for tests.
 
-> Equality may perhaps be a right, but no power on earth can ever turn it into a fact.  
+> Equality may perhaps be a right, but no power on earth can ever turn it into a fact.\
 > &nbsp; &nbsp; &nbsp; &nbsp; — *Honore de Balzac*
 
 [![Travis CI](https://img.shields.io/travis/Microsoft/same-ish.svg)](https://travis-ci.org/Microsoft/same-ish)
@@ -77,5 +77,5 @@ Contributions are welcomed, see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
-Copyright (c) Microsoft Corporation. All rights reserved.  
+Copyright (c) Microsoft Corporation. All rights reserved.\
 Licensed under the [MIT License](LICENSE).

@@ -40,7 +40,7 @@
                                    :target :nodejs}}}}
 
   :plugins [;; Nice test output
-            [venantius/ultra "0.5.2"]
+            [venantius/ultra "0.6.0"]
 
             ;; Clojurescript tests
             [lein-doo "0.1.8"]
@@ -82,7 +82,7 @@
                   ["vcs" "push"]
                   ["deploy-docs"]]
 
-  :repositories [["clojars" {:url "https://clojars.org"
+  :repositories [["clojars" {:url "https://repo.clojars.org"
                              :creds :gpg}]]
 
   :deploy-repositories [["releases" :clojars]]

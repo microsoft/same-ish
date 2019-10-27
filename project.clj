@@ -15,12 +15,13 @@
 
   :profiles
   {:dev
-   {:dependencies [[org.clojure/clojure "1.9.0"]
-                   [org.clojure/clojurescript "1.9.946"]
+   {:dependencies [[org.clojure/clojure "1.10.0"]
+                   [org.clojure/clojurescript "1.10.520"]
                    [viebel/codox-klipse-theme "0.0.5"]]}
    :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]]}
    :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}
-   :1.9  {:dependencies [[org.clojure/clojure "1.9.0"]]}}
+   :1.9  {:dependencies [[org.clojure/clojure "1.9.0"]]}
+   :1.10 {:dependencies [[org.clojure/clojure "1.10.0"]]}}
   :cljsbuild {:builds {:test
                        {:source-paths ["src" "test"]
                         :compiler {:output-to "target/test.js"
@@ -61,7 +62,7 @@
   :middleware [ultra.plugin/middleware]
 
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]
-            "tests" ["with-profile" "+1.9:+1.8:+1.7" "test"]
+            "tests" ["with-profile" "+1.10:+1.9:+1.8:+1.7" "test"]
             "docs" ["do"
                     ["shell" "dev-resources/prepare-docs.sh" "target/docs"]
                     "codox"

@@ -6,12 +6,12 @@
 
 (defn- near-zero-double
   [f max-diff]
-  (<= (double f) (p/ulp (double max-diff))))
+  (<= (double f) (double (p/ulp (double max-diff)))))
 
 #?(:clj
    (defn- near-zero-float
      [f max-diff]
-     (<= (float f) (p/ulp (float max-diff)))))
+     (<= (float f) (float (p/ulp (float max-diff))))))
 
 (defn near-zero
   "Test if a number is near zero."

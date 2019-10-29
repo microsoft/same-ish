@@ -15,13 +15,14 @@
 
   :profiles
   {:dev
-   {:dependencies [[org.clojure/clojure "1.10.0"]
+   {:dependencies [[org.clojure/clojure "1.10.1"]
                    [org.clojure/clojurescript "1.10.520"]
-                   [viebel/codox-klipse-theme "0.0.5"]]}
+                   [viebel/codox-klipse-theme "0.0.5"]
+                   [fipp "0.6.21"]]}
    :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]]}
    :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}
    :1.9  {:dependencies [[org.clojure/clojure "1.9.0"]]}
-   :1.10 {:dependencies [[org.clojure/clojure "1.10.0"]]}}
+   :1.10 {:dependencies [[org.clojure/clojure "1.10.1"]]}}
   :cljsbuild {:builds {:test
                        {:source-paths ["src" "test"]
                         :compiler {:output-to "target/test.js"
@@ -41,23 +42,23 @@
                                    :target :nodejs}}}}
 
   :plugins [;; Nice test output
-            [venantius/ultra "0.6.0"]
+            [venantius/ultra "0.6.0" :exclusions [fipp]]
 
             ;; Clojurescript tests
-            [lein-doo "0.1.8"]
+            [lein-doo "0.1.11"]
 
             ;; Code coverage
-            [lein-cloverage "1.0.13"]
+            [lein-cloverage "1.1.2"]
 
             ;; Documentation
-            [lein-codox "0.10.5"]
+            [lein-codox "0.10.7"]
 
             ;; Run shell commands for doc generation
             [lein-shell "0.5.0"]
 
             ;; Code/style checks
-            [jonase/eastwood "0.3.3"]
-            [lein-cljfmt "0.6.1"]]
+            [jonase/eastwood "0.3.5"]
+            [lein-cljfmt "0.6.4"]]
 
   :middleware [ultra.plugin/middleware]
 

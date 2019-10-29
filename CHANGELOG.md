@@ -5,8 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## Versions
 
 ## [Unreleased]
+
+## [0.1.3] - 2019-10-29
 ### Changed
 - Fix `ulp` of zero (no effect on normal usage)
+- Update to Clojure(script) 1.10 and fix tests on JDK9+ (thanks to [@dl1ely](https://github.com/dl1ely))
 
 ## [0.1.2] - 2018-10-26
 ### Changed

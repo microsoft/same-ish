@@ -80,10 +80,10 @@
                   ["vcs" "tag"]
                   ["docs"]
                   ["deploy"]
+                  ["deploy-docs"]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["vcs" "commit"]
-                  ["vcs" "push"]
-                  ["deploy-docs"]]
+                  ["vcs" "push"]]
 
   :repositories [["clojars" {:url "https://repo.clojars.org"
                              :creds :gpg}]]

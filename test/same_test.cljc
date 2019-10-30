@@ -127,14 +127,14 @@
   (is (not-zeroish? (float 0.01)))
   (is (not (zeroish? (- 2e12 (* (Math/sqrt 2e12) (Math/sqrt 2e12))))))
   (is (zeroish? (- 2e12 (* (Math/sqrt 2e12) (Math/sqrt 2e12)))
-                :max-diff 2e12))
+                :scale 2e12))
   #?(:clj
      (is (zeroish? (p/to-float (- 50.0 (* (p/to-float (Math/sqrt 50.0))
                                           (p/to-float (Math/sqrt 50.0)))))
-                   :max-diff 50.0)))
+                   :scale 50.0)))
   (is (not-zeroish? (double (- 50.0 (* (p/to-float (Math/sqrt 50.0))
                                        (p/to-float (Math/sqrt 50.0)))))
-                    :max-diff 50.0)))
+                    :scale 50.0)))
 
 (deftest with-comparator-test
   (is (with-comparator ==

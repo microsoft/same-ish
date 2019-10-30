@@ -50,7 +50,7 @@ of the largest number used in the subtraction, so that the absolute difference c
 
 ```clojure
 (is (zeroish? (something 123 1e6)
-              :max-diff 10000))
+              :scale 10000))
 ```
 
 There is also a negated version `not-zeroish?` for convenience, which is equivalent to `(not (zeroish? ...))`.

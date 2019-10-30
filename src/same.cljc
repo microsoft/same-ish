@@ -31,18 +31,18 @@
   "Compare a numeric value to zero, returning true if close.
   ```klipse
   (zeroish? 0.0000000001
-            :max-diff 1e6)
+            :scale 1e6)
   ```"
-  [val & {:keys [max-diff] :or {max-diff 1000.0}}]
-  (near-zero val max-diff))
+  [val & {:keys [scale] :or {scale 1000.0}}]
+  (near-zero val scale))
 
 (defn not-zeroish?
   "Compare a numeric value to zero, returning true if not close. Equivalent to `(not (zeroish? ...))`.
   ```klipse
-  (not-zeroish? 3 :max-diff 1e6)
+  (not-zeroish? 3 :scale 1e6)
   ```"
-  [val & {:keys [max-diff] :or {max-diff 1000.0}}]
-  (not (near-zero val max-diff)))
+  [val & {:keys [scale] :or {scale 1000.0}}]
+  (not (near-zero val scale)))
 
 (defn set-comparator!
   "Set the default comparator.

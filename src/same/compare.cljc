@@ -5,21 +5,21 @@
   (:require [same.platform :as p]))
 
 (defn- near-zero-double
-  [f max-diff]
-  (<= (double f) (double (p/ulp (double max-diff)))))
+  [f scale]
+  (<= (double f) (double (p/ulp (double scale)))))
 
 #?(:clj
    (defn- near-zero-float
-     [f max-diff]
-     (<= (float f) (float (p/ulp (float max-diff))))))
+     [f scale]
+     (<= (float f) (float (p/ulp (float scale))))))
 
 (defn near-zero
   "Test if a number is near zero."
-  [f max-diff]
+  [f scale]
   #?(:clj (if (instance? Float f)
-            (near-zero-float f max-diff)
-            (near-zero-double f max-diff))
-     :cljs (near-zero-double f max-diff)))
+            (near-zero-float f scale)
+            (near-zero-double f scale))
+     :cljs (near-zero-double f scale)))
 
 (defn- compare-ulp-double
   [f1 f2 max-abs max-ulp]
@@ -65,15 +65,15 @@
 
 (defn compare-ulp
   "Create a comparator function that compares numbers by ULPs."
-  [max-diff max-ulp]
+  [scale max-ulp]
   #?(:clj
-     (let [max-abs-double (p/ulp (double max-diff))
-           max-abs-float  (p/ulp (float max-diff))]
+     (let [max-abs-double (p/ulp (double scale))
+           max-abs-float  (p/ulp (float scale))]
        (fn [f1 f2]
          (if (instance? Float f1)
            (compare-ulp-float  f1 f2 max-abs-float  max-ulp)
            (compare-ulp-double f1 f2 max-abs-double max-ulp))))
      :cljs
-     (let [max-abs (p/ulp max-diff)]
+     (let [max-abs (p/ulp scale)]
        (fn [f1 f2]
          (compare-ulp-double f1 f2 max-abs max-ulp)))))

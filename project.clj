@@ -17,7 +17,8 @@
   {:dev
    {:dependencies [[org.clojure/clojure "1.10.1"]
                    [org.clojure/clojurescript "1.10.520"]
-                   [viebel/codox-klipse-theme "0.0.5"]]}
+                   [viebel/codox-klipse-theme "0.0.5"]
+                   [org.clojure/core.rrb-vector "0.0.14"]]}
    :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]]}
    :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}
    :1.9  {:dependencies [[org.clojure/clojure "1.9.0"]]}
@@ -41,8 +42,8 @@
                                    :target :nodejs}}}}
 
   :plugins [;; Nice test output
-            [venantius/ultra "0.6.0" :exclusions [mvxcvi/puget]]
-            [mvxcvi/puget "1.2.0"]
+            [venantius/ultra "0.6.0" :exclusions [org.clojure/core.rrb-vector]]
+            [org.clojure/core.rrb-vector "0.0.14"]
 
             ;; Clojurescript tests
             [lein-doo "0.1.11"]

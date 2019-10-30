@@ -70,7 +70,7 @@
      (let [max-abs-double (p/ulp (double max-diff))
            max-abs-float  (p/ulp (float max-diff))]
        (fn [f1 f2]
-         (if (instance? #?(:clj Float :cljs float) f1)
+         (if (instance? Float f1)
            (compare-ulp-float  f1 f2 max-abs-float  max-ulp)
            (compare-ulp-double f1 f2 max-abs-double max-ulp))))
      :cljs

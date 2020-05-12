@@ -95,9 +95,10 @@
 
   :doo {:build "test"
         :paths {:slimer "./node_modules/.bin/slimerjs"}
-        :alias {:default [:phantom]
+        :alias {:default [:lumo]
                 :browsers [:chrome :chrome-canary :chrome-headless :safari]
-                :all [:phantom #_:slimer :rhino :nashorn :browsers]}}
+                :all [:default :planck :browsers]
+                :broken [:phantom :slimer :rhino :nashorn :node]}}
 
   :eastwood {:linters [:all]
              :exclude-linters [:keyword-typos

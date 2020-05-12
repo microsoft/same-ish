@@ -85,10 +85,8 @@
                   ["vcs" "commit"]
                   ["vcs" "push"]]
 
-  :repositories [["clojars" {:url "https://repo.clojars.org"
-                             :creds :gpg}]]
-
-  :deploy-repositories [["releases" :clojars]]
+  :deploy-repositories [["releases" {:url "https://repo.clojars.org"
+                                     :creds :gpg}]]
 
   :test-selectors {:default (complement (some-fn :slow :fail))
                    :most    (complement :fail)

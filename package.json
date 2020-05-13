@@ -9,9 +9,7 @@
     "src": "src",
     "test": "test"
   },
-  "dependencies": {
-    "lumo-cljs": "^1.10.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "karma": "^5.0.5",
     "karma-chrome-launcher": "^3.1.0",

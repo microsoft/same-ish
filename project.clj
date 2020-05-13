@@ -94,7 +94,8 @@
                    :fail    :fail}
 
   :doo {:build "test"
-        :paths {:slimer "./node_modules/.bin/slimerjs"}
+        :paths {:lumo   "./node_modules/.bin/lumo"
+                :slimer "./node_modules/.bin/slimerjs"}
         :alias {:default [:lumo]
                 :browsers [:chrome :chrome-canary :chrome-headless :safari]
                 :all [:default :planck :browsers]

@@ -12,6 +12,10 @@ env:
   global:
     - LEIN_USE_BOOTCLASSPATH=no
 
+install:
+  - nvm install 6
+  - npm install
+
 script:
   - lein checks
   - lein tests

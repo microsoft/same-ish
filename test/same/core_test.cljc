@@ -1,10 +1,9 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
-(ns same-test
-  "Deprecated in favor of same.core-test."
+(ns same.core-test
   (:require [clojure.test :refer [deftest is testing]]
-            #?(:clj  [same :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
-               :cljs [same :refer [ish? zeroish? not-zeroish? set-comparator!]
+            #?(:clj  [same.core :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
+               :cljs [same.core :refer [ish? zeroish? not-zeroish? set-comparator!]
                       :refer-macros [with-comparator]])
             [same.diff :as sd]
             [same.ish :as ish]

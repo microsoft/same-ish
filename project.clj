@@ -9,7 +9,7 @@
   :scm {:name "git"
         :url "https://github.com/Microsoft/same-ish"}
 
-  :deploy-branches ["master"]
+  :deploy-branches ["main"]
 
   :dependencies []
 

@@ -25,7 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2017-10-25
 Initial release.
 
-[Unreleased]: //github.com/Microsoft/same-ish/compare/0.1.4...master
+[Unreleased]: //github.com/Microsoft/same-ish/compare/0.1.4...main
 [0.1.4]: //github.com/Microsoft/same-ish/compare/0.1.3...0.1.4
 [0.1.3]: //github.com/Microsoft/same-ish/compare/0.1.2...0.1.3
 [0.1.2]: //github.com/Microsoft/same-ish/compare/0.1.1...0.1.2

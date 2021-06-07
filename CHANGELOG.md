@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Versions
 
 ## [Unreleased]
+- Deprecate single-segment namespace
+- Switch clojurescript build to Figwheel.main
+
 
 ## [0.1.5] - 2022-07-16
 - Deprecate single-segment `same` namespace in favour of `same.core`

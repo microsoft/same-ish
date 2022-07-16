@@ -134,7 +134,11 @@
                    :scale 50.0)))
   (is (not-zeroish? (double (- 50.0 (* (p/to-float (Math/sqrt 50.0))
                                        (p/to-float (Math/sqrt 50.0)))))
-                    :scale 50.0)))
+                    :scale 50.0))
+  (is (zeroish? (p/ulp 10) :scale 100))
+  (is (zeroish? (- (p/ulp 10)) :scale 100))
+  (is (not-zeroish? (p/ulp 1000) :scale 100))
+  (is (not-zeroish? (- (p/ulp 1000)) :scale 100)))
 
 (deftest with-comparator-test
   (is (with-comparator ==

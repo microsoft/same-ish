@@ -6,12 +6,12 @@
 
 (defn- near-zero-double
   [f scale]
-  (<= (double f) (double (p/ulp (double scale)))))
+  (<= (Math/abs (double f)) (double (p/ulp (double scale)))))
 
 #?(:clj
    (defn- near-zero-float
      [f scale]
-     (<= (float f) (float (p/ulp (float scale))))))
+     (<= (Math/abs (float f)) (float (p/ulp (float scale))))))
 
 (defn near-zero
   "Test if a number is near zero."

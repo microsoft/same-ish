@@ -15,14 +15,15 @@
 
   :profiles
   {:dev
-   {:dependencies [[org.clojure/clojure "1.10.1"]
-                   [org.clojure/clojurescript "1.10.758"]
+   {:dependencies [[org.clojure/clojure "1.11.1"]
+                   [org.clojure/clojurescript "1.11.60"]
                    [viebel/codox-klipse-theme "0.0.5"]
-                   [org.clojure/core.rrb-vector "0.1.1"]]}
+                   [org.clojure/core.rrb-vector "0.1.2"]]}
    :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]]}
    :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}
    :1.9  {:dependencies [[org.clojure/clojure "1.9.0"]]}
-   :1.10 {:dependencies [[org.clojure/clojure "1.10.1"]]}}
+   :1.10 {:dependencies [[org.clojure/clojure "1.10.1"]]}
+   :1.11 {:dependencies [[org.clojure/clojure "1.11.1"]]}}
   :cljsbuild {:builds {:test
                        {:source-paths ["src" "test"]
                         :compiler {:output-to "target/test.js"
@@ -43,7 +44,7 @@
 
   :plugins [;; Nice test output
             [venantius/ultra "0.6.0" :exclusions [org.clojure/core.rrb-vector]]
-            [org.clojure/core.rrb-vector "0.1.1"]
+            [org.clojure/core.rrb-vector "0.1.2"]
 
             ;; Clojurescript tests
             [lein-doo "0.1.11"]
@@ -52,19 +53,19 @@
             [lein-cloverage "1.1.2"]
 
             ;; Documentation
-            [lein-codox "0.10.7"]
+            [lein-codox "0.10.8"]
 
             ;; Run shell commands for doc generation
             [lein-shell "0.5.0"]
 
             ;; Code/style checks
-            [jonase/eastwood "0.3.5"]
-            [lein-cljfmt "0.6.4"]]
+            [jonase/eastwood "1.2.4"]
+            [lein-cljfmt "0.8.2"]]
 
   :middleware [ultra.plugin/middleware]
 
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]
-            "tests" ["with-profile" "+1.10:+1.9:+1.8:+1.7" "test"]
+            "tests" ["with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test"]
             "docs" ["do"
                     ["shell" "dev-resources/prepare-docs.sh" "target/docs"]
                     "codox"

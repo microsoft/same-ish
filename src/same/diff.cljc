@@ -167,14 +167,14 @@
      (diff [this that]
        (if (ish this that)
          [nil nil (un-array that)]
-         (if (p/is-array? that)
+         (if (and (p/is-array? this) (p/is-array? that))
            (diff-seq this that)
            [(un-array this) (un-array that) nil]))))
 
    :cljs
    (extend-protocol Diff
      nil
-     (diff [this that]
+     (diff [_this that]
        [nil that nil])
 
      number

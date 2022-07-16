@@ -23,7 +23,10 @@
    :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}
    :1.9  {:dependencies [[org.clojure/clojure "1.9.0"]]}
    :1.10 {:dependencies [[org.clojure/clojure "1.10.1"]]}
-   :1.11 {:dependencies [[org.clojure/clojure "1.11.1"]]}}
+   :1.11 {:dependencies [[org.clojure/clojure "1.11.1"]]}
+   :clj-kondo {:dependencies [[clj-kondo "2022.06.22"]
+                              [com.fasterxml.jackson.core/jackson-core "2.13.3"]]}}
+
   :cljsbuild {:builds {:test
                        {:source-paths ["src" "test"]
                         :compiler {:output-to "target/test.js"
@@ -64,8 +67,9 @@
 
   :middleware [ultra.plugin/middleware]
 
-  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "eastwood"]
-            "tests" ["with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test"]
+  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo" "eastwood"]
+            "clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "src" "test"]
+            "tests" ["do" "with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test," "test" ":slow"]
             "docs" ["do"
                     ["shell" "dev-resources/prepare-docs.sh" "target/docs"]
                     "codox"
@@ -89,10 +93,8 @@
   :deploy-repositories [["releases" {:url "https://repo.clojars.org"
                                      :creds :gpg}]]
 
-  :test-selectors {:default (complement (some-fn :slow :fail))
-                   :most    (complement :fail)
-                   :slow    :slow
-                   :fail    :fail}
+  :test-selectors {:default (complement :slow)
+                   :slow    :slow}
 
   :doo {:build "test"
         :paths {:lumo   "./node_modules/.bin/lumo"

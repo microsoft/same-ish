@@ -3,8 +3,8 @@
 (ns same.core
   "Main public API namespace."
   (:require #?(:clj [clojure.test :refer [assert-expr do-report]])
+            #?(:clj [same.diff :refer [diff]])
             [same.compare :refer [near-zero]]
-            [same.diff :refer [diff]]
             [same.ish :as ish :refer [ish]]))
 
 (defn ish?

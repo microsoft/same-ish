@@ -6,10 +6,9 @@
             #?(:clj  [same :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
                :cljs [same :refer [ish? zeroish? not-zeroish? set-comparator!]
                       :refer-macros [with-comparator]])
-            [same.diff :as sd]
             [same.ish :as ish]
             [same.platform :as p]
-            [same.test-helpers :refer [about infinity java-map java-set]]))
+            [same.test-helpers :refer [about infinity #?@(:clj [java-map java-set])]]))
 
 (deftest scalar-test
   (is (ish? 1.0 1.0))
@@ -102,7 +101,9 @@
     (is (ish? (into-array [1.0 2.0]) (into-array [1.0 2.0])))
     (is (ish? (into-array [1.0 2.0]) (into-array [(about 1) 2.0])))
     (is (not (ish? (into-array [1.0 2.0]) (into-array [1.01 2.0]))))
-    (is (not (ish? (into-array [1.0 2.0]) (into-array [1.0])))))
+    (is (not (ish? (into-array [1.0 2.0]) (into-array [1.0]))))
+    (is (not (ish? (into-array [1.0 2.0]) [1.0 2.0])))
+    (is (not (ish? [1.0 2.0] (into-array [1.0 2.0])))))
   (testing "Arrays of mixed types"
     (is (ish? (to-array [1.0 2 \b "c" :d])
               (to-array [1.0 2 \b "c" :d])))

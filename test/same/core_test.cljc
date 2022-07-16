@@ -5,10 +5,9 @@
             #?(:clj  [same.core :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
                :cljs [same.core :refer [ish? zeroish? not-zeroish? set-comparator!]
                       :refer-macros [with-comparator]])
-            [same.diff :as sd]
             [same.ish :as ish]
             [same.platform :as p]
-            [same.test-helpers :refer [about infinity java-map java-set]]))
+            [same.test-helpers :refer [about infinity #?@(:clj [java-map java-set])]]))
 
 (deftest scalar-test
   (is (ish? 1.0 1.0))

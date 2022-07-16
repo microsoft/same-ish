@@ -1,7 +1,7 @@
 ;; Copyright (c) Microsoft Corporation. All rights reserved.
 ;; Licensed under the MIT License.
 (ns same.platform-test
-  (:require [clojure.test :refer [deftest is are]]
+  (:require [clojure.test :refer [deftest is]]
             [same.platform :as p]
             [same.test-helpers :refer [infinity nan unconstant]]))
 

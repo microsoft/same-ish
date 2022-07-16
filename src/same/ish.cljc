@@ -98,7 +98,7 @@
    :cljs
    (extend-protocol Approximate
      nil
-     (ish [this that]
+     (ish [_this that]
        (nil? that))
 
      number

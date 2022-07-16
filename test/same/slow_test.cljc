@@ -2,12 +2,12 @@
 ;; Licensed under the MIT License.
 (ns same.slow-test
   (:require [clojure.data :as data]
-            [clojure.test :refer [is testing]]
+            [clojure.test :refer [is testing deftest]]
             [same :refer [ish?]]
             [same.diff :as sd]
-            [same.test-helpers :refer [about deftest-slow]]))
+            [same.test-helpers :refer [about]]))
 
-(deftest-slow equal-ish
+(deftest ^:slow equal-ish
   ;; test that `=`, `==`, `ish?` and  `diff` are consistent for various types/values
   (let [vals [nil "a" "b" \a \b :a :b 1 2 1.0 (about 1) 2.0 [] '() #{} {} (into-array [])]
         vals (reduce into
@@ -44,7 +44,7 @@
         (when (and (number? a) (number? b) (== a b))
           (is (ish? a b)))))))
 
-(deftest-slow data-diff
+(deftest ^:slow data-diff
   ;; test that our diff behaves the same as clojure.data/diff for non-floats
   (let [vals [nil :a :b [] '() #{} {} [nil] '(nil) #{nil} [:a] '(:a) #{:a} {nil nil} {:a :b}]
         vals (reduce into

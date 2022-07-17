@@ -89,4 +89,4 @@
 
   :eastwood {:linters [:all]
              :exclude-linters [:keyword-typos
-                               :non-clojure-file]}
+                               :non-clojure-file]})

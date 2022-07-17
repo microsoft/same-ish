@@ -4,6 +4,7 @@
   "Platform-specific code, to try to minimise reader conditionals in the rest of the codebase.")
 
 (def max-value
+  "The largest representable non-infinite Double."
   #?(:clj (Double/MAX_VALUE)
      :cljs (.-MAX_VALUE js/Number)))
 
@@ -20,7 +21,7 @@
      :cljs (js/isNaN f)))
 
 (defn sign
-  "Return the sign of `f` (+1 if positive, -1 if negative, 0 if zero or NaN if NaN)."
+  "Return the sign of `f` (+1 if positive, -1 if negative, 0 if zero, or NaN if NaN)."
   [f]
   #?(:clj (Math/signum (double f))
      :cljs (cond

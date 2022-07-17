@@ -10,6 +10,11 @@
   (is (p/is-array? (unconstant (to-array [1 :a "b"]))))
   (is (not (p/is-array? [1 2 3]))))
 
+(deftest nan?-test
+  (is (p/nan? nan))
+  (is (not (p/nan? 0.0)))
+  (is (not (p/nan? infinity))))
+
 (deftest sign-test
   (is (=  1.0 (p/sign 10.0)))
   (is (=  0.0 (p/sign 0.0)))

@@ -1,4 +1,4 @@
-(defproject same/ish "0.1.5-SNAPSHOT"
+(defproject same/ish "0.1.5"
   :description "A Clojure library for approximate comparison of floating point numbers in tests."
 
   :license {:name "MIT License"

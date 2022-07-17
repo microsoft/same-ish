@@ -19,8 +19,8 @@ And what if your numbers are buried inside data structures?
 
 ## Usage
 
-See the [API docs](https://microsoft.github.io/same-ish/latest) for more detailed instructions
-and interactive examples. A brief summary is provided below.
+See the full API docs are available on [cljdoc](https://cljdoc.org/d/same/ish) for more detailed instructions and examples.
+A brief summary is provided below.
 
 In Leiningen, add the following to your `:dependencies` in `project.clj`:
 

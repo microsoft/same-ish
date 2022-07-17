@@ -7,7 +7,7 @@ To compare two doubles, instead of using `=` or `==`, use `ish?`:
 ```clojure
 (ns demo.ish-test
   (:require [clojure.test :refer :all]
-            [same :refer [ish?]]))
+            [same.core :refer [ish?]]))
 
 (deftest ish-test
   (let [one-ish (-> 1.0 (/ 49) (* 49))]
@@ -24,7 +24,7 @@ for floating point types, `==` for other numbers, and `=` for anything else:
 (ns demo.matrix-test
   (:require [clojure.core.matrix :as m]
             [clojure.test :refer :all]
-            [same :refer [ish?]]))
+            [same.core :refer [ish?]]))
 
 (deftest matrix-test
   (is (ish? [[-17/24   7/24  1/24]

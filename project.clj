@@ -52,7 +52,11 @@
             [lein-doo "0.1.11"]
 
             ;; Code coverage
+<<<<<<< HEAD
             [lein-cloverage "1.2.4"]
+=======
+            [lein-cloverage "1.1.2"]
+>>>>>>> 31703a7 (Remove custom docs code in favour of cljdoc)
 
             ;; Code/style checks
             [jonase/eastwood "1.2.4"]

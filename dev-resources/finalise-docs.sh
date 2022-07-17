@@ -9,6 +9,8 @@ die() {
     exit 1
 }
 
+LUMO=./node_modules/.bin/lumo
+
 DOCDIR=$1
 [[ -d $DOCDIR ]] || die "Not a directory: $DOCDIR"
 
@@ -29,7 +31,7 @@ cp doc/*.png $DOCDIR/
 
 echo "Generating clojurescript cache"
 mkdir $DOCDIR/cache-cljs
-lumo -k $DOCDIR/cache-cljs -c $(lein classpath) -e "$(lumo dev-resources/klipse-require.cljs)"
+$LUMO -k $DOCDIR/cache-cljs -c $(lein classpath) -e "$($LUMO dev-resources/klipse-require.cljs)"
 
 echo "Updating version list landing page"
 VERSIONS=$(git tag --list --format='%(refname:short) %(creatordate:short)' --sort=-creatordate)

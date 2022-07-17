@@ -30,9 +30,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Initial release.
 
 [Unreleased]: //github.com/Microsoft/same-ish/compare/0.1.5...main
-[0.1.4]: //github.com/Microsoft/same-ish/compare/0.1.4...0.1.5
+[0.1.5]: //github.com/Microsoft/same-ish/compare/0.1.4...0.1.5
 [0.1.4]: //github.com/Microsoft/same-ish/compare/0.1.3...0.1.4
 [0.1.3]: //github.com/Microsoft/same-ish/compare/0.1.2...0.1.3
 [0.1.2]: //github.com/Microsoft/same-ish/compare/0.1.1...0.1.2
 [0.1.1]: //github.com/Microsoft/same-ish/compare/0.1.0...0.1.1
-[0.1.0]: //github.com/Microsoft/same-ish/compare/5fb6fa2dee4ae31ca8d3936b2575f64192529d92...0.1.0
+[0.1.0]: //github.com/Microsoft/same-ish/compare/initial...0.1.0

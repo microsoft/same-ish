@@ -17,7 +17,6 @@
   {:dev
    {:dependencies [[org.clojure/clojure "1.11.1"]
                    [org.clojure/clojurescript "1.11.60"]
-                   [viebel/codox-klipse-theme "0.0.5"]
                    [org.clojure/core.rrb-vector "0.1.2"]]}
    :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]]}
    :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}
@@ -55,12 +54,6 @@
             ;; Code coverage
             [lein-cloverage "1.1.2"]
 
-            ;; Documentation
-            [lein-codox "0.10.8"]
-
-            ;; Run shell commands for doc generation
-            [lein-shell "0.5.0"]
-
             ;; Code/style checks
             [jonase/eastwood "1.2.4"]
             [lein-cljfmt "0.8.2"]]
@@ -69,22 +62,12 @@
 
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo" "eastwood"]
             "clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "src" "test"]
-            "tests" ["do" "with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test," "test" ":slow"]
-            "docs" ["do"
-                    ["shell" "dev-resources/prepare-docs.sh" "target/docs"]
-                    "codox"
-                    ["shell" "dev-resources/finalise-docs.sh" "target/docs/${:version}"]]
-            "deploy-docs" ["do"
-                           ["shell" "git" "-C" "target/docs" "add" "."]
-                           ["shell" "git" "-C" "target/docs" "commit" "-m" "Documentation for ${:version}"]
-                           ["shell" "git" "-C" "target/docs" "push"]]}
+            "tests" ["do" "with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test," "test" ":slow"]}
 
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
                   ["vcs" "commit"]
                   ["vcs" "tag"]
-                  ["docs"]
-                  ["deploy-docs"]
                   ["deploy"]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["vcs" "commit"]
@@ -107,31 +90,3 @@
   :eastwood {:linters [:all]
              :exclude-linters [:keyword-typos
                                :non-clojure-file]}
-
-  :codox {:project {:name "same/ish"}
-          :metadata {:doc/format :markdown
-                     :doc "**FIXME:** write docs"}
-          :source-uri "https://github.com/Microsoft/same-ish/blob/{version}/{filepath}#L{line}"
-          :output-path "target/docs/{VERSION}"
-          :html {:namespace-list :flat}
-          :themes
-          [:default
-           [:klipse
-            {:klipse/external-libs
-             "https://raw.githubusercontent.com/Microsoft/same-ish/{VERSION}/src"
-             :klipse/cached-macro-ns-regexp #"/same|same\..*/"
-             :klipse/cached-ns-regexp #"/same|same\..*/"
-             :klipse/bundled-ns-ignore-regexp #"/same|same\..*/"
-             :klipse/cached-ns-root "./cache-cljs"
-             :klipse/require-statement
-             "(ns same.klipse
-          (:require-macros [same :refer [with-comparator]])
-          (:require [same :refer [ish? zeroish? not-zeroish? set-comparator!]]
-                    [same.compare :refer [compare-ulp]]
-                    [same.ish :refer [default-comparator]]))"}]]})
-
-(def project (-> project
-                 (update-in [:codox :output-path]
-                            clojure.string/replace "{VERSION}" (project :version))
-                 (update-in [:codox :themes 1 1 :klipse/external-libs]
-                            clojure.string/replace "{VERSION}" (project :version))))

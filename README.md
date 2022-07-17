@@ -26,11 +26,11 @@ In Leiningen, add the following to your `:dependencies` in `project.clj`:
 
 [![Clojars Project](https://clojars.org/same/ish/latest-version.svg)](https://clojars.org/same/ish)
 
-Then in your test namespace(s), require `same`:
+Then in your test namespace(s), require `same.core`:
 ```clojure
 (ns foo-test
   (:requre [clojure.test :refer :all]
-           [same :refer [ish? zeroish?]]))
+           [same :refer.core [ish? zeroish?]]))
 ```
 
 To compare two numbers, instead of using `=` or `==`, use `ish?`:

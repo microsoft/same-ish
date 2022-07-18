@@ -3,6 +3,7 @@
 > Equality may perhaps be a right, but no power on earth can ever turn it into a fact.\
 > &nbsp; &nbsp; &nbsp; &nbsp; — *Honore de Balzac*
 
+[![cljdoc](https://cljdoc.org/badge/same/ish)](https://cljdoc.org/d/same/ish)
 [![Travis CI](https://img.shields.io/travis/Microsoft/same-ish.svg)](https://travis-ci.org/Microsoft/same-ish)
 [![Codecov](https://img.shields.io/codecov/c/github/Microsoft/same-ish.svg)](https://codecov.io/gh/Microsoft/same-ish)
 [![Dependencies Status](https://versions.deps.co/Microsoft/same-ish/status.svg)](https://versions.deps.co/Microsoft/same-ish)

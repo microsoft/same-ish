@@ -52,7 +52,7 @@
             [lein-doo "0.1.11"]
 
             ;; Code coverage
-            [lein-cloverage "1.1.2"]
+            [lein-cloverage "1.2.4"]
 
             ;; Code/style checks
             [jonase/eastwood "1.2.4"]

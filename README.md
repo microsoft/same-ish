@@ -31,7 +31,7 @@ Then in your test namespace(s), require `same.core`:
 ```clojure
 (ns foo-test
   (:requre [clojure.test :refer :all]
-           [same :refer.core [ish? zeroish?]]))
+           [same.core :refer [ish? zeroish?]]))
 ```
 
 To compare two numbers, instead of using `=` or `==`, use `ish?`:

@@ -87,7 +87,8 @@
                 :all [:default :planck :browsers]
                 :broken [:phantom :slimer :rhino :nashorn :node]}}
 
-  :cloverage {:test-ns-regex [#"^(?!same[.]slow-).*"]}
+  :cloverage {:selector [:default]
+              :codecov? true}
 
   :eastwood {:linters [:all]
              :exclude-linters [:keyword-typos

@@ -58,6 +58,7 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         base-path: src
+        path-to-lcov: target/coverage/lcov.info
         github-token: ${{ secrets.CoverallsToken }}
 
     - name: Run unit tests on old Clojure versions

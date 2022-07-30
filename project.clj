@@ -46,7 +46,7 @@
 
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo"]
             "clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "src" "test"]
-            "tests" ["do" "with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test," "test" ":slow"]
+            "tests" ["with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test"]
             "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]
             "fig:min"   ["run" "-m" "figwheel.main" "-O" "advanced" "-bo" "dev"]
             "fig:test"  ["run" "-m" "figwheel.main" "-co" "test.cljs.edn" "-m" "same.test-runner"]}

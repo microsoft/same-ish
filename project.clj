@@ -40,12 +40,11 @@
             [lein-cloverage "1.2.4"]
 
             ;; Code/style checks
-            [jonase/eastwood "1.2.4"]
             [lein-cljfmt "0.8.2"]]
 
   ;;:middleware [ultra.plugin/middleware]
 
-  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo" "eastwood"]
+  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo"]
             "clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "src" "test"]
             "tests" ["do" "with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test," "test" ":slow"]
             "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]
@@ -68,8 +67,4 @@
                    :slow    :slow}
 
   :cloverage {:selector [:default]
-              :codecov? true}
-
-  :eastwood {:linters [:all]
-             :exclude-linters [:keyword-typos
-                               :non-clojure-file]})
+              :codecov? true})

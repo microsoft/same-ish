@@ -69,4 +69,4 @@
                    :slow    :slow}
 
   :cloverage {:selector [:default]
-              :codecov? true})
+              :lcov? true})

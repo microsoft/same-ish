@@ -47,9 +47,11 @@
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo"]
             "clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "src" "test"]
             "tests" ["with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test"]
-            "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]
-            "fig:min"   ["run" "-m" "figwheel.main" "-O" "advanced" "-bo" "dev"]
-            "fig:test"  ["run" "-m" "figwheel.main" "-co" "test.cljs.edn" "-m" "same.test-runner"]}
+            "fig:build"      ["trampoline" "run" "-m" "figwheel.main" "--build" "dev" "--repl"]
+            "fig:test"       ["run" "-m" "figwheel.main" "-co" "test.cljs.edn" "-m" "same.test-runner"]
+            "fig:min"        ["run" "-m" "figwheel.main" "-O" "advanced" "-bo" "dev"]
+            "fig:build-once" ["trampoline" "run" "-m" "figwheel.main" "--build-once" "dev"]
+            "fig:ci-test"    ["run" "-m" "figwheel.main" "-co" "test-ci.cljs.edn" "-m" "same.test-runner"]}
 
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]

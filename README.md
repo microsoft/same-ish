@@ -67,6 +67,7 @@ required for ClojureScript support.
 - [Comparing Floating Point Numbers, 2012 Edition](https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/)
 - [What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html)
 - [Floating Point Demystified, Part 1](http://blog.reverberate.org/2014/09/what-every-computer-programmer-should.html)
+- [Floating Point Demystified, Part 2](https://blog.reverberate.org/2016/02/06/floating-point-demystified-part2.html)
 
 ## Changelog
 

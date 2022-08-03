@@ -59,7 +59,7 @@ jobs:
       with:
         base-path: src
         path-to-lcov: target/coverage/lcov.info
-        github-token: ${{ secrets.CoverallsToken }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Run unit tests on old Clojure versions
       run: lein tests

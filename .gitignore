@@ -7,11 +7,13 @@ pom.xml.asc
 /target/
 /checkouts/
 /node_modules
+/resources/public/cljs-out
 .eastwood
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/
 .lein-failures
 .nrepl-port
+.rebel_readline_history
 .DS_Store
 .#*

@@ -1,0 +1,4 @@
+^{:watch-dirs ["test" "src"]
+  :auto-testing true
+   }
+{:main same.core}

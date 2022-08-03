@@ -1,0 +1,76 @@
+name: Checks
+
+on: [push, pull_request]
+
+jobs:
+  checks:
+    name: Pre-build checks
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache maven dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: mvn-${{ hashFiles('project.clj') }}
+        restore-keys: |
+          mvn-
+
+    - name: Install dependencies
+      run: lein with-profile +clj-kondo deps
+
+    - name: Run reflection check
+      run: |
+        set -euo pipefail
+        lein check 2>&1 | tee check.out
+        ! grep 'Reflection warning, tortilla/' check.out
+
+    - name: Run style check
+      run: lein cljfmt check
+
+    - name: Run lint check
+      run: lein clj-kondo
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache maven dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: mvn-${{ hashFiles('project.clj') }}
+        restore-keys: |
+          mvn-
+
+    - name: Install dependencies
+      run: lein with-profile +clj-kondo deps
+
+    - name: Run unit tests
+      run: lein cloverage
+
+    - name: Push coverage to Coveralls.io
+      uses: coverallsapp/github-action@master
+      with:
+        path-to-lcov: target/coverage/lcov.info
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Run unit tests on old Clojure versions
+      run: lein tests
+
+    - name: Run slow tests
+      run: lein test :slow
+
+    - name: Build Clojurescript
+      run: lein fig:build-once
+
+#    - name: Install Chrome
+#
+#    - name: Run Clojurescript tests
+#      run: lein fig:ci-test
+

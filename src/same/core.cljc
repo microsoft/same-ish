@@ -3,7 +3,7 @@
 (ns same.core
   "Main public API namespace."
   (:require #?(:clj [clojure.test :refer [assert-expr do-report]])
-            #?(:clj [same.diff :refer [diff]])
+            #?(:clj [same.diff :as diff])
             [same.compare :refer [near-zero]]
             [same.ish :as ish :refer [ish]]))
 
@@ -83,6 +83,6 @@
                       :expected expected# :actual (if (= 1 (count actuals#))
                                                     (first actuals#)
                                                     actuals#)
-                      :diffs (mapv #(vector % (diff expected# %))
+                      :diffs (mapv #(vector % (diff/diff expected# %))
                                    actuals#)}))
         result#)))

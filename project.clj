@@ -16,53 +16,42 @@
   :profiles
   {:dev
    {:dependencies [[org.clojure/clojure "1.11.1"]
-                   [org.clojure/clojurescript "1.11.60"]
-                   [org.clojure/core.rrb-vector "0.1.2"]]}
+                   [org.clojure/clojurescript "1.11.4"]
+                   [com.bhauman/figwheel-main "0.2.17"]
+                   [org.slf4j/slf4j-nop "1.7.30"]
+                   [com.bhauman/rebel-readline-cljs "0.1.4"]
+                   [org.clojure/core.rrb-vector "0.1.2"]]
+    :resource-paths ["target"]
+    ;; need to add the compiled assets to the :clean-targets
+    :clean-targets ^{:protect false} ["target"]}
    :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]]}
    :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]]}
    :1.9  {:dependencies [[org.clojure/clojure "1.9.0"]]}
-   :1.10 {:dependencies [[org.clojure/clojure "1.10.1"]]}
+   :1.10 {:dependencies [[org.clojure/clojure "1.10.3"]]}
    :1.11 {:dependencies [[org.clojure/clojure "1.11.1"]]}
    :clj-kondo {:dependencies [[clj-kondo "2022.06.22"]
                               [com.fasterxml.jackson.core/jackson-core "2.13.3"]]}}
 
-  :cljsbuild {:builds {:test
-                       {:source-paths ["src" "test"]
-                        :compiler {:output-to "target/test.js"
-                                   :source-map "target/test.js.map"
-                                   :output-dir "target/js"
-                                   :main same.test-runner
-                                   :optimizations :advanced
-                                   :checked-arrays :warn}}
-                       :node-test
-                       {:source-paths ["src" "test"]
-                        :compiler {:output-to "target/test.js"
-                                   :source-map "target/test.js.map"
-                                   :output-dir "target/js"
-                                   :main same.test-runner
-                                   :optimizations :advanced
-                                   :checked-arrays :warn
-                                   :target :nodejs}}}}
-
   :plugins [;; Nice test output
-            [venantius/ultra "0.6.0" :exclusions [org.clojure/core.rrb-vector]]
-            [org.clojure/core.rrb-vector "0.1.2"]
-
-            ;; Clojurescript tests
-            [lein-doo "0.1.11"]
+            #_[venantius/ultra "0.6.0" :exclusions [org.clojure/core.rrb-vector]]
+            #_[org.clojure/core.rrb-vector "0.1.2"]
 
             ;; Code coverage
             [lein-cloverage "1.2.4"]
 
             ;; Code/style checks
-            [jonase/eastwood "1.2.4"]
             [lein-cljfmt "0.8.2"]]
 
-  :middleware [ultra.plugin/middleware]
+  ;;:middleware [ultra.plugin/middleware]
 
-  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo" "eastwood"]
+  :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo"]
             "clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "src" "test"]
-            "tests" ["do" "with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test," "test" ":slow"]}
+            "tests" ["with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test"]
+            "fig:build"      ["trampoline" "run" "-m" "figwheel.main" "--build" "dev" "--repl"]
+            "fig:test"       ["run" "-m" "figwheel.main" "-co" "test.cljs.edn" "-m" "same.test-runner"]
+            "fig:min"        ["run" "-m" "figwheel.main" "-O" "advanced" "-bo" "dev"]
+            "fig:build-once" ["trampoline" "run" "-m" "figwheel.main" "--build-once" "dev"]
+            "fig:ci-test"    ["run" "-m" "figwheel.main" "-co" "test-ci.cljs.edn" "-m" "same.test-runner"]}
 
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
@@ -79,17 +68,5 @@
   :test-selectors {:default (complement :slow)
                    :slow    :slow}
 
-  :doo {:build "test"
-        :paths {:lumo   "./node_modules/.bin/lumo"
-                :slimer "./node_modules/.bin/slimerjs"}
-        :alias {:default [:lumo]
-                :browsers [:chrome :chrome-canary :chrome-headless :safari]
-                :all [:default :planck :browsers]
-                :broken [:phantom :slimer :rhino :nashorn :node]}}
-
   :cloverage {:selector [:default]
-              :codecov? true}
-
-  :eastwood {:linters [:all]
-             :exclude-linters [:keyword-typos
-                               :non-clojure-file]})
+              :lcov? true})

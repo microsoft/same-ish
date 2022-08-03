@@ -65,7 +65,7 @@ jobs:
       run: lein tests
 
     - name: Run slow tests
-      run: lein test slow
+      run: lein test :slow
 
     - name: Build Clojurescript
       run: lein fig:build-once

@@ -3,9 +3,7 @@
 (ns same-test
   "Deprecated in favor of same.core-test."
   (:require [clojure.test :refer [deftest is testing]]
-            #?(:clj  [same :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
-               :cljs [same :refer [ish? zeroish? not-zeroish? set-comparator!]
-                      :refer-macros [with-comparator]])
+            [same :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
             [same.ish :as ish]
             [same.platform :as p]
             [same.test-helpers :refer [about infinity #?@(:clj [java-map java-set])]]))

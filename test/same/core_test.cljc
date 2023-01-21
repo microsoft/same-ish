@@ -2,9 +2,7 @@
 ;; Licensed under the MIT License.
 (ns same.core-test
   (:require [clojure.test :refer [deftest is testing]]
-            #?(:clj  [same.core :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
-               :cljs [same.core :refer [ish? zeroish? not-zeroish? set-comparator!]
-                      :refer-macros [with-comparator]])
+            [same.core :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
             [same.ish :as ish]
             [same.platform :as p]
             [same.test-helpers :refer [about infinity #?@(:clj [java-map java-set])]]))

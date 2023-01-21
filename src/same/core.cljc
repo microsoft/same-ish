@@ -5,7 +5,9 @@
   (:require #?(:clj [clojure.test :refer [assert-expr do-report]])
             #?(:clj [same.diff :as diff])
             [same.compare :refer [near-zero]]
-            [same.ish :as ish :refer [ish]]))
+            [same.ish :as ish :refer [ish]])
+  #?(:cljs
+     (:require-macros [same.core])))
 
 (defn ish?
   "Compare one or more values to an expected value, returning true if they are the same-ish.

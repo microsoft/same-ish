@@ -16,9 +16,9 @@
   :profiles
   {:dev
    {:dependencies [[org.clojure/clojure "1.11.1"]
-                   [org.clojure/clojurescript "1.11.4"]
-                   [com.bhauman/figwheel-main "0.2.17"]
-                   [org.slf4j/slf4j-nop "1.7.30"]
+                   [org.clojure/clojurescript "1.11.60"]
+                   [com.bhauman/figwheel-main "0.2.18"]
+                   [org.slf4j/slf4j-nop "2.0.6"]
                    [com.bhauman/rebel-readline-cljs "0.1.4"]
                    [org.clojure/core.rrb-vector "0.1.2"]]
     :resource-paths ["target"]
@@ -29,8 +29,8 @@
    :1.9  {:dependencies [[org.clojure/clojure "1.9.0"]]}
    :1.10 {:dependencies [[org.clojure/clojure "1.10.3"]]}
    :1.11 {:dependencies [[org.clojure/clojure "1.11.1"]]}
-   :clj-kondo {:dependencies [[clj-kondo "2022.06.22"]
-                              [com.fasterxml.jackson.core/jackson-core "2.13.3"]]}}
+   :clj-kondo {:dependencies [[clj-kondo "2023.01.20"]
+                              [com.fasterxml.jackson.core/jackson-core "2.14.1"]]}}
 
   :plugins [;; Nice test output
             #_[venantius/ultra "0.6.0" :exclusions [org.clojure/core.rrb-vector]]

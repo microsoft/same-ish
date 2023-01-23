@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Versions
 
 ## [Unreleased]
+
+## [0.1.6] - 2023-01-23
 - Deprecate single-segment namespace
 - Switch clojurescript build to Figwheel.main
 - Remove need for `:include-macros true` in cljs (thanks to [sritchie](https://github.com/sritchie))
@@ -32,7 +34,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2017-10-25
 Initial release.
 
-[Unreleased]: https://github.com/Microsoft/same-ish/compare/0.1.5...main
+[Unreleased]: https://github.com/Microsoft/same-ish/compare/0.1.6...main
+[0.1.6]: https://github.com/Microsoft/same-ish/compare/0.1.5...0.1.6
 [0.1.5]: https://github.com/Microsoft/same-ish/compare/0.1.4...0.1.5
 [0.1.4]: https://github.com/Microsoft/same-ish/compare/0.1.3...0.1.4
 [0.1.3]: https://github.com/Microsoft/same-ish/compare/0.1.2...0.1.3

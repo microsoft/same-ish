@@ -2,7 +2,9 @@
 ;; Licensed under the MIT License.
 (ns same
   {:deprecated "0.1.5" :superseded-by "same.core"}
-  (:require [same.core]))
+  (:require [same.core])
+  #?(:cljs
+     (:require-macros [same])))
 
 (def ish? same.core/ish?)
 (def zeroish? same.core/zeroish?)

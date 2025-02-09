@@ -3,7 +3,7 @@
 (ns same.slow-test
   (:require [clojure.data :as data]
             [clojure.test :refer [is testing deftest]]
-            [same :refer [ish?]]
+            [same.core :refer [ish?]]
             [same.diff :as sd]
             [same.test-helpers :refer [about]]))
 

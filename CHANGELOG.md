@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Versions
 
 ## [Unreleased]
+
+## [0.1.7] - 2025-02-09
 - Remove deprecated single-segment namespace
+- Fix accidental inclusion of compiled artifacts in jar
 
 ## [0.1.6] - 2023-01-23
 - Mark deprecated single-segment namespace with ^:deprecated metadata

@@ -5,10 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Versions
 
 ## [Unreleased]
+- Remove deprecated single-segment namespace
 
 ## [0.1.6] - 2023-01-23
-- Deprecate single-segment namespace
-- Switch clojurescript build to Figwheel.main
+- Mark deprecated single-segment namespace with ^:deprecated metadata
+- Move clojurescript build to Figwheel.main
 - Remove need for `:include-macros true` in cljs (thanks to [sritchie](https://github.com/sritchie))
 
 ## [0.1.5] - 2022-07-16

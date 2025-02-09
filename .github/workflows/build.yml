@@ -6,6 +6,8 @@ jobs:
   checks:
     name: Pre-build checks
     runs-on: ubuntu-latest
+    container:
+      image: clojure:lein-alpine
 
     steps:
     - uses: actions/checkout@v2
@@ -36,6 +38,8 @@ jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
+    container:
+      image: clojure:lein-alpine
 
     steps:
     - uses: actions/checkout@v2

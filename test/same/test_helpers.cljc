@@ -19,11 +19,3 @@
 (def nan
   #?(:clj Double/NaN
      :cljs js/NaN))
-
-(defn java-set
-  [& coll]
-  (java.util.HashSet. ^java.util.Collection coll))
-
-(defn java-map
-  [& {:as map}]
-  (java.util.HashMap. ^java.util.Map map))

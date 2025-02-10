@@ -9,11 +9,14 @@ pom.xml.asc
 /checkouts/
 /node_modules
 .eastwood
+.clj-kondo/
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/
 .lein-failures
 .nrepl-port
+.java-version
+.lsp/
 .rebel_readline_history
 .DS_Store
 .#*

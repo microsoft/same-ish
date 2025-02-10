@@ -5,7 +5,7 @@
 
 (def max-value
   "The largest representable non-infinite Double."
-  #?(:clj (Double/MAX_VALUE)
+  #?(:clj Double/MAX_VALUE
      :cljs (.-MAX_VALUE js/Number)))
 
 (defn is-array?

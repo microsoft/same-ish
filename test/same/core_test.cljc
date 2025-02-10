@@ -5,7 +5,8 @@
             [same.core :refer [ish? zeroish? not-zeroish? set-comparator! with-comparator]]
             [same.ish :as ish]
             [same.platform :as p]
-            [same.test-helpers :refer [about infinity #?@(:clj [java-map java-set])]]))
+            [same.test-helpers :refer [about infinity]])
+  #?(:clj (:import [java.util HashSet HashMap])))
 
 (deftest scalar-test
   (is (ish? 1.0 1.0))
@@ -64,12 +65,12 @@
     (is (not (ish? #{1.0 2 \b "c" :d} #{1.01 2 \b "c" :d}))))
   #?(:clj
      (testing "Java sets"
-       (is (ish? (java-set 1.0 2 \b "c" :d)
-                 (java-set 1.0 2 \b "c" :d)))
-       (is (ish? (java-set 1.0 2 \b "c" :d)
-                 (java-set (about 1) 2 \b "c" :d)))
-       (is (not (ish? (java-set 1.0 2 \b "c" :d)
-                      (java-set 1.01 2 \b "c" :d)))))))
+       (is (ish? (HashSet. [1.0 2 \b "c" :d])
+                 (HashSet. [1.0 2 \b "c" :d])))
+       (is (ish? (HashSet. [1.0 2 \b "c" :d])
+                 (HashSet. [(about 1) 2 \b "c" :d])))
+       (is (not (ish? (HashSet. [1.0 2 \b "c" :d])
+                      (HashSet. [1.01 2 \b "c" :d])))))))
 
 (deftest map-test
   (testing "Maps of keyword-double"
@@ -86,12 +87,12 @@
     (is (not (ish? {1.0 2 :a "b"} {1.01 2 :a "b"}))))
   #?(:clj
      (testing "Java maps"
-       (is (ish? (java-map 1.0 2 :a "b")
-                 (java-map 1.0 2 :a "b")))
-       (is (ish? (java-map 1.0 2 :a "b")
-                 (java-map (about 1) 2 :a "b")))
-       (is (not (ish? (java-map 1.0 2 :a "b")
-                      (java-map 1.01 2 :a "b")))))))
+       (is (ish? (HashMap. {1.0 2 :a "b"})
+                 (HashMap. {1.0 2 :a "b"})))
+       (is (ish? (HashMap. {1.0 2 :a "b"})
+                 (HashMap. {(about 1) 2 :a "b"})))
+       (is (not (ish? (HashMap. {1.0 2 :a "b"})
+                      (HashMap. {1.01 2 :a "b"})))))))
 
 (deftest array-test
   (testing "Arrays of doubles"

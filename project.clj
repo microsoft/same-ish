@@ -31,6 +31,7 @@
    :1.11 {:dependencies [[org.clojure/clojure "1.11.1"]]}
    :clj-kondo {:dependencies [[clj-kondo "2023.01.20"]
                               [com.fasterxml.jackson.core/jackson-core "2.14.1"]]}}
+   :antq {:dependencies [[com.github.liquidz/antq "RELEASE"]]}
 
   :plugins [;; Nice test output
             #_[venantius/ultra "0.6.0" :exclusions [org.clojure/core.rrb-vector]]
@@ -47,6 +48,7 @@
   :aliases {"checks" ["do" "check" ["cljfmt" "check"] "clj-kondo"]
             "clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "src" "test"]
             "tests" ["with-profile" "+1.11:+1.10:+1.9:+1.8:+1.7" "test"]
+            "outdated"       ["with-profile" "antq" "run" "-m" "antq.core"]
             "fig:build"      ["trampoline" "run" "-m" "figwheel.main" "--build" "dev" "--repl"]
             "fig:test"       ["run" "-m" "figwheel.main" "-co" "test.cljs.edn" "-m" "same.test-runner"]
             "fig:min"        ["run" "-m" "figwheel.main" "-O" "advanced" "-bo" "dev"]

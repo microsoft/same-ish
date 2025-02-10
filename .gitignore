@@ -5,9 +5,9 @@ pom.xml.asc
 /lib/
 /classes/
 /target/
+/cljs-target/
 /checkouts/
 /node_modules
-/resources/public/cljs-out
 .eastwood
 .lein-deps-sum
 .lein-repl-history

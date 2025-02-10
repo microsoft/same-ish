@@ -6,7 +6,7 @@
 
  ;; Change the target directory from the "target" to "resources"
  ;; https://figwheel.org/config-options#target-dir
- :target-dir "resources"
+ :target-dir "cljs-target"
 
  ;; Server Ring Handler (optional) https://figwheel.org/docs/ring-handler.html
  ;; If you want to embed a ring handler into the figwheel server, this

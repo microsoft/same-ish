@@ -6,7 +6,6 @@
 [![cljdoc](https://cljdoc.org/badge/same/ish)](https://cljdoc.org/d/same/ish)
 [![Build status](https://github.com/microsoft/same-ish/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/microsoft/same-ish/actions/workflows/build.yml)
 [![Coverage](https://coveralls.io/repos/github/microsoft/same-ish/badge.svg?branch=main)](https://coveralls.io/github/microsoft/same-ish?branch=main)
-[![Dependencies Status](https://versions.deps.co/Microsoft/same-ish/status.svg)](https://versions.deps.co/Microsoft/same-ish)
 [![Downloads](https://img.shields.io/clojars/dt/same/ish.svg)](https://clojars.org/same/ish)
 
 You have some functions that return doubles or floats and you want to write some tests.

@@ -45,5 +45,23 @@
   (is (p/nan? (p/ulp nan))))
 
 (deftest bit-diff-double-test
+  (is (zero? (p/bit-diff-double 1.0 1.0)))
   (is (= 1 (p/bit-diff-double 1.0 1.0000000000000002)))
-  (is (= 1 (p/bit-diff-double 1.0000000000000002 1.0))))
+  (is (= 1 (p/bit-diff-double 1.0000000000000002 1.0)))
+  (is (= 0x8000000000000 (p/bit-diff-double 1.0 1.5)))
+  (is (= 0x8000000000000 (p/bit-diff-double 1.5 1.0)))
+  (is (= 0x10000000000000 (p/bit-diff-double 1.0 2.0)))
+  (is (= 0x10000000000000 (p/bit-diff-double 2.0 1.0)))
+  (is (= 0x100000000000000 (p/bit-diff-double 1.0 65536.0)))
+  (is (= 0x100000000000000 (p/bit-diff-double 65536.0 1.0))))
+
+(deftest bit-diff-float-test
+  (is (zero? (p/bit-diff-float 1.0 1.0)))
+  (is (= 1 (p/bit-diff-float 1.0 1.0000001)))
+  (is (= 1 (p/bit-diff-float 1.0000001 1.0)))
+  (is (= 0x400000 (p/bit-diff-float 1.0 1.5)))
+  (is (= 0x400000 (p/bit-diff-float 1.5 1.0)))
+  (is (= 0x800000 (p/bit-diff-float 1.0 2.0)))
+  (is (= 0x800000 (p/bit-diff-float 2.0 1.0)))
+  (is (= 0x8000000 (p/bit-diff-float 1.0 65536.0)))
+  (is (= 0x8000000 (p/bit-diff-float 65536.0 1.0))))

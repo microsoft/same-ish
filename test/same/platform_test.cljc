@@ -42,8 +42,7 @@
            [infinity                infinity]]]
     (is (= u (p/ulp v)))
     (is (= u (p/ulp (- v)))))
-  #?(:clj  (is (Double/isNaN (p/ulp nan)))
-     :cljs (is (js/isNaN     (p/ulp nan)))))
+  (is (p/nan? (p/ulp nan))))
 
 (deftest bit-diff-double-test
   (is (= 1 (p/bit-diff-double 1.0 1.0000000000000002)))

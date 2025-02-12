@@ -74,11 +74,18 @@
             (Math/ulp (double f)))
      :cljs (ulp* f)))
 
+(defn abs-val
+  [v]
+  (cond
+    (= v Long/MIN_VALUE) (- (bigint v))
+    (neg? v)             (- v)
+    :else                v))
+
 (defn bit-diff-double
   "Difference between two doubles in ULPs (i.e. number of representable numbers between them + 1)."
   [f1 f2]
-  #?(:clj (abs (- (Double/doubleToLongBits f1)
-                  (Double/doubleToLongBits f2)))
+  #?(:clj (abs-val (- (bigint (Double/doubleToLongBits f1))
+                      (bigint (Double/doubleToLongBits f2))))
      :cljs (let [buf (js/ArrayBuffer. 16)
                  dv  (js/DataView. buf)]
              (.setFloat64 dv 0 (double f1))
@@ -90,8 +97,8 @@
 (defn bit-diff-float
   "Difference between two floats in ULPs (i.e. number of representable numbers between them + 1)."
   [f1 f2]
-  #?(:clj (abs ^long (- (Float/floatToIntBits f1)
-                        (Float/floatToIntBits f2)))
+  #?(:clj (abs-val (- (Float/floatToIntBits f1)
+                      (Float/floatToIntBits f2)))
      :cljs (let [buf (js/ArrayBuffer. 8)
                  dv  (js/DataView. buf)]
              (.setFloat32 dv 0 (float f1))

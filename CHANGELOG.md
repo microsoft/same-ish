@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Versions
 
 ## [Unreleased]
+- Fix bug that would return true for `(ish? 1.0 2.0)` in recent Java versions (found/tested in Java 17)
+- Fix some overflows and edge cases when comparing doubles that are not close
 
 ## [0.1.7] - 2025-02-09
 - Remove deprecated single-segment namespace

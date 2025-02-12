@@ -46,6 +46,8 @@
 
 (deftest bit-diff-double-test
   (is (zero? (p/bit-diff-double 1.0 1.0)))
+  (is (= 0x8000000000000000N (p/bit-diff-double 1.0 -1.0)))
+  (is (= 0x8000000000000000N (p/bit-diff-double -1.0 1.0)))
   (is (= 1 (p/bit-diff-double 1.0 1.0000000000000002)))
   (is (= 1 (p/bit-diff-double 1.0000000000000002 1.0)))
   (is (= 0x8000000000000 (p/bit-diff-double 1.0 1.5)))

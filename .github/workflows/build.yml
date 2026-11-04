@@ -58,12 +58,6 @@ jobs:
     - name: Run unit tests
       run: lein cloverage
 
-    - name: Push coverage to Coveralls.io
-      uses: coverallsapp/github-action@master
-      with:
-        path-to-lcov: target/coverage/lcov.info
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Run unit tests on old Clojure versions
       run: lein tests
 
@@ -77,4 +71,3 @@ jobs:
 #
 #    - name: Run Clojurescript tests
 #      run: lein fig:ci-test
-
